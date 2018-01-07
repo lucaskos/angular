@@ -1,0 +1,23 @@
+<div *ngIf="film">
+  <hr />
+  <h2>{{ film.title | uppercase }} Details</h2>
+  <div>
+    <span>id: </span>{{film.id}}</div>
+  <div>
+    <label>title:
+      <input [(ngModel)]="film.title" placeholder="title">
+    </label>
+    <br />
+    <label>year
+      <input [(ngModel)]="film.year" placeholder="year">
+    </label>
+    <label>
+      <input [(ngModel)]="film.description" placeholder="descr">
+    </label>
+  </div>
+</div>
+<!--if user log in and have credentials -->
+<button onclick="">add new film</button>
+<div id="create-film">
+
+</div>

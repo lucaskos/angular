@@ -1,0 +1,14 @@
+.selected {
+    background-color: bisque;
+    color: brown;
+}
+.films {
+    background-color: aquamarine;
+    list-style: none;
+    width: 20em;
+}
+.films li {
+    cursor: pointer;
+    position: relative;
+    background-color: tan;
+}

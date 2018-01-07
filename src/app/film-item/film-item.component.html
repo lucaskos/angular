@@ -1,0 +1,20 @@
+<p>
+  {{test}}
+</p>
+<div>
+  <ul class="films">
+    <li *ngFor="let film of films"
+         (click)="onSelect(film)">
+      <span><b>{{film.title}}</b> - {{film.year}}</span>
+      <span><i>{{film.description}}</i></span>
+      <td>
+        <button type="button" (click)="loadFilmToEdit(film.filmId)">Edit</button>
+      </td>
+      <td>
+        <button type="button" (click)="deleteFilm(film.filmId)">Delete</button>
+      </td>
+          <hr />
+    </li>
+  </ul>
+</div>
+<app-film-detail [film]="filmDetail"></app-film-detail>
