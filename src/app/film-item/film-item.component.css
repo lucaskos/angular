@@ -1,3 +1,6 @@
+div.film-item {
+    border: 1em black solid;
+}
 .selected {
     background-color: bisque;
     color: brown;

@@ -1,4 +1,6 @@
-<p>
+<div class="film-item">
+  <p>film-item</p>
+  <p>
   {{test}}
 </p>
 <div>
@@ -7,6 +9,7 @@
          (click)="onSelect(film)">
       <span><b>{{film.title}}</b> - {{film.year}}</span>
       <span><i>{{film.description}}</i></span>
+      <span>{{film.description}}</span>
       <td>
         <button type="button" (click)="loadFilmToEdit(film.filmId)">Edit</button>
       </td>
@@ -17,4 +20,4 @@
     </li>
   </ul>
 </div>
-<app-film-detail [film]="filmDetail"></app-film-detail>
+</div>

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Film } from './../film';
 import { Component, OnInit } from '@angular/core';
 import {FilmService} from '../services/film-service/film.service';
@@ -12,6 +13,7 @@ export class FilmItemComponent implements OnInit {
   test = 'List of films';
   films: Film[];
   filmDetail: Film;
+  collection: Observable<Film[]>;
 
   constructor(private filmservice: FilmService) {
 
@@ -23,6 +25,8 @@ export class FilmItemComponent implements OnInit {
   }
 
   getFilms(): void {
+    this.collection = this.filmservice.getFilms();
+
     this.filmservice.getFilms()
       .subscribe(film => this.films = film);
   }
@@ -36,7 +40,6 @@ export class FilmItemComponent implements OnInit {
   }
 
   loadFilmToEdit(film: Film): void {
-    console.log(film);
     this.filmDetail = film;
   }
 }

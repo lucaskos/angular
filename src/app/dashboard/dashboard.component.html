@@ -3,7 +3,7 @@
   <a *ngFor="let film of films" class="col-1-4"
   routerLink="/film/{{film.filmId}}">
       <div class="module film">
-        <h4>{{film.title}}</h4>
+        <h4>{{film.title}} - {{film.year}}</h4>
       </div>
   </a>
 </div>

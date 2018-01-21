@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
   getFilms(): void {
     this.filmService.getFilms()
-    .subscribe(films => this.films = films.slice(1, 4));
+    .subscribe(films => this.films = films.slice(0, 4));
   }
 
 }
