@@ -1,3 +1,5 @@
+import { AuthenticationService } from './services/authentication.service';
+import { LoginComponent } from './login/login.component';
 import { FilmCreateComponent } from './film-detail/film-edit.component';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +12,6 @@ import { FilmDetailComponent } from './film-detail/film-detail.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login/login/login.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { LoginComponent } from './login/login/login.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [FilmService],
+  providers: [FilmService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
