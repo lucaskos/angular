@@ -40,4 +40,8 @@ export class FilmDetailComponent implements OnInit {
     this.location.back();
   }
 
+  save(): void {
+    this.filmService.saveFilm(this.film).subscribe(() => this.goBack());
+  }
+
 }

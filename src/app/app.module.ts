@@ -1,3 +1,4 @@
+import { FilmCreateComponent } from './film-detail/film-edit.component';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -9,13 +10,16 @@ import { FilmDetailComponent } from './film-detail/film-detail.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilmItemComponent,
     FilmDetailComponent,
-    DashboardComponent
+    DashboardComponent,
+    FilmCreateComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

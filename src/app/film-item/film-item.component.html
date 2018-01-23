@@ -5,8 +5,8 @@
 </p>
 <div>
   <ul class="films">
-    <li *ngFor="let film of films"
-         (click)="onSelect(film)">
+    <li *ngFor="let film of films">
+      <a class="film-item" routerLink="/film/{{film.filmId}}">
       <span><b>{{film.title}}</b> - {{film.year}}</span>
       <span><i>{{film.description}}</i></span>
       <span>{{film.description}}</span>
@@ -17,6 +17,7 @@
         <button type="button" (click)="deleteFilm(film.filmId)">Delete</button>
       </td>
           <hr />
+              </a>
     </li>
   </ul>
 </div>

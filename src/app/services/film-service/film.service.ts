@@ -29,12 +29,16 @@ export class FilmService {
   /** GET film by id */
   getFilm(id: number): Observable<Film> {
     const url = `${this.filmUrl}/${id}`;
+    this.film = this.http.get<Film>(url, httpOptions);
+    if (this.film != null) {
+      this.film.subscribe(res => console.log(res));
+    }
     // Todo: send the message _after_ fetching the hero
     return this.http.get<Film>(url, httpOptions);
     // return of(FILMS.find(film => film.filmId === id));
   }
 
-  createFilm(film: Film): Observable<Number> {
+  saveFilm(film: Film): Observable<Number> {
     console.log(film);
     return null;
     // return this.http.post<Number>(this.filmUrl, httpOptions);

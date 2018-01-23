@@ -1,3 +1,4 @@
+import { FilmCreateComponent } from './film-detail/film-edit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FilmItemComponent } from './film-item/film-item.component';
 import { Film } from './film';
@@ -11,7 +12,7 @@ const routes: Routes = [
   {path: 'films', component: FilmItemComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'film/:id', component: FilmDetailComponent},
-  {path: 'film/new', component: FilmDetailComponent}
+  {path: 'films/new', component: FilmCreateComponent}
 ];
 
 @NgModule({

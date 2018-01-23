@@ -15,3 +15,6 @@ div.film-item {
     position: relative;
     background-color: tan;
 }
+a.film-item {
+    text-decoration: none;
+}
