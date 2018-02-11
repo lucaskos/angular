@@ -13,6 +13,7 @@ import { FilmDetailComponent } from './film-detail/film-detail.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     FilmDetailComponent,
     DashboardComponent,
     FilmCreateComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
