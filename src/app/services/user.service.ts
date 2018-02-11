@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
-export class AuthenticationService {
+export class UserService {
     private authUrl = 'http://localhost:8080/filmdb/login';
 
     constructor(private http: HttpClient) {

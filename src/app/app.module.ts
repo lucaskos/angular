@@ -1,5 +1,5 @@
 import { TokenInterceptor } from './token.interceptor';
-import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 import { LoginComponent } from './login/login.component';
 import { FilmCreateComponent } from './film-detail/film-edit.component';
 import { RouterModule } from '@angular/router';
@@ -32,7 +32,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [FilmService, AuthenticationService,
+  providers: [FilmService, UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

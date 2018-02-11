@@ -1,4 +1,4 @@
-import { AuthenticationService } from './../services/authentication.service';
+import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private userService: UserService) { }
 
   ngOnInit() {
     // reset login status
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loading = true;
-    this.authenticationService.login(this.model.username, this.model.password)
+    this.userService.login(this.model.username, this.model.password)
       .subscribe(result => {
         if (result === true) {
           // login successful
@@ -36,5 +36,9 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.error = error;
       });
+  }
+
+  logout() {
+    this.userService.logout();
   }
 }
