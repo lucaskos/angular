@@ -1,3 +1,4 @@
+import { TokenInterceptor } from './token.interceptor';
 import { AuthenticationService } from './services/authentication.service';
 import { LoginComponent } from './login/login.component';
 import { FilmCreateComponent } from './film-detail/film-edit.component';
@@ -11,7 +12,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FilmDetailComponent } from './film-detail/film-detail.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [FilmService, AuthenticationService],
+  providers: [FilmService, AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

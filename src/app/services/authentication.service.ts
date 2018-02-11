@@ -25,10 +25,12 @@ export class AuthenticationService {
                 const authHeader = response.headers.get('Authorization');
                 // const token = response.json() && response.json().token;
                 const token = response.headers.get('Authorization');
+                console.log(token);
                 if (token) {
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+                    localStorage.setItem('Authorization', token);
                     // return true to indicate successful login
+                    console.log('Token set on localStorage :' + localStorage.getItem('Authorization'));
                     return true;
                 } else {
                     // return false to indicate failed login
