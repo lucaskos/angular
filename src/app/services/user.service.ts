@@ -1,3 +1,4 @@
+import { User } from './../user';
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -8,17 +9,18 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class UserService {
-    private authUrl = 'http://localhost:8080/filmdb/login';
+    private mainUrl = 'http://localhost:8080/filmdb';
 
     constructor(private http: HttpClient) {
     }
 
     login(username: string, password: string): Observable<boolean> {
 
+        const login = '/login';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Expose-Headers', 'Authorization');
 
-        return this.http.post(this.authUrl, JSON.stringify({ username: username, password: password }),
+        return this.http.post(this.mainUrl + login, JSON.stringify({ username: username, password: password }),
         { headers: headers, observe: 'response' })
             .map((response) => {
                 // login successful if there's a jwt token in the response
@@ -41,5 +43,12 @@ export class UserService {
 
     logout() {
         localStorage.removeItem('currentUser');
+    }
+
+    register(user: User) {
+        const registerUrl = '/users/sign-up';
+
+        console.log('User : ' + JSON.stringify(user));
+        return this.http.post(this.mainUrl + registerUrl, user);
     }
 }
