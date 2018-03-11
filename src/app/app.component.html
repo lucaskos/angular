@@ -15,7 +15,7 @@
     <li>
       <a class="nav-link" routerLink="/films">Films</a>
     </li>
-    <li>
+    <li *ngIf="isAdmin">
       <a class="nav-link" routerLink="/films/new">Add new film</a>
     </li>
   </ul>

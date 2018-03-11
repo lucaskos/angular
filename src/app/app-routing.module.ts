@@ -17,7 +17,6 @@ const routes: Routes = [
   {path: 'film/:id', component: FilmDetailComponent},
   {path: 'films/new', component: FilmCreateComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'logout', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
 ];
 

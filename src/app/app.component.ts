@@ -14,8 +14,10 @@ export class AppComponent {
   logoutText = 'Logout';
   link: string;
   text: string;
+  private isAdmin = false;
 
   constructor(private userService: UserService) {
+    this.isAdmin = userService.isAdmin();
   }
 
   get authenticated() {

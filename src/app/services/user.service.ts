@@ -12,6 +12,7 @@ export class UserService {
     private mainUrl = 'http://localhost:8080/filmdb';
     private tokenName = 'Authorization';
     private user: User;
+    private roleToken = 'ROLES';
 
     constructor(private http: HttpClient) {
     }
@@ -28,11 +29,13 @@ export class UserService {
                 const authHeader = response.headers.get('Authorization');
                 // const token = response.json() && response.json().token;
                 const token = response.headers.get('Authorization');
+                const roles = response.headers.get('ROLES');
                 if (token) {
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem(this.tokenName, token);
                     // return true to indicate successful login
                     console.log('Token set on localStorage :' + localStorage.getItem(this.tokenName));
+                    localStorage.setItem(this.roleToken, roles);
                     return true;
                 } else {
                     // return false to indicate failed login
@@ -58,6 +61,7 @@ export class UserService {
 
     logout() {
         localStorage.removeItem(this.tokenName);
+        localStorage.removeItem(this.roleToken);
     }
 
     register(user: User) {
@@ -68,7 +72,11 @@ export class UserService {
     }
 
     getUserToken(): any {
-        return localStorage.getItem(this.tokenName);
+        return localStorage.getItem(this.roleToken);
+    }
+
+    getUserRoles(): String {
+        return localStorage.getItem(this.roleToken);
     }
 
     isAuthenticated(): boolean {
@@ -84,19 +92,34 @@ export class UserService {
     isAdmin(): boolean {
         let isAdmin = false;
         const user = this.getUserToken();
-        this.user = this.getUserToken();
+        const roles = this.getUserRoles();
 
-        if (user !== null && user !== undefined) {
+        if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
             const userRole = user.Role;
             try {
-                const role = localStorage.getItem('UserRole');
-                console.log(role);
+                const role = localStorage.getItem(this.roleToken);
+                if (roles.match('ROLE_ADMIN') !== null)  {
+                    isAdmin = true;
+                }
             } catch (error) {
                 isAdmin = false;
             }
         }
 
         return isAdmin;
+    }
+
+    isPremium(): boolean {
+        let isPremium = false;
+        const user = this.getUserToken();
+        const roles = this.getUserRoles();
+
+        if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
+            
+        }
+
+        return isPremium;
+
     }
 
 }
