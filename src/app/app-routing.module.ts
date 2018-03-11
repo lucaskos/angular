@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FilmDetailComponent } from './film-detail/film-detail.component';
+import { UserService } from './services/user.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'film/:id', component: FilmDetailComponent},
   {path: 'films/new', component: FilmCreateComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
 ];
 
@@ -23,4 +25,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot(routes)]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

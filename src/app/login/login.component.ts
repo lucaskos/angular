@@ -33,12 +33,9 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         }
       }, error => {
+        // login failed, error in the stacktrace
         this.loading = false;
-        this.error = error;
+        this.error = 'Username or password is incorrect';
       });
-  }
-
-  logout() {
-    this.userService.logout();
   }
 }

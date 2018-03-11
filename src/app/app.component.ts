@@ -1,3 +1,4 @@
+import { UserService } from './services/user.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,27 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  loginLink = '/login';
+  logoutLink = '/logout';
+  loginText = 'Login';
+  logoutText = 'Logout';
+  link: string;
+  text: string;
+
+  constructor(private userService: UserService) {
+  }
+
+  get authenticated() {
+    const login = localStorage.getItem('Authorization');
+    if (login != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  doLogout() {
+    console.log('logout');
+    this.userService.logout();
+  }
 }

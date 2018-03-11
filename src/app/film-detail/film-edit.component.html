@@ -1,9 +1,18 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="filmForm" novalidate>
+<div class="container">
+<form [formGroup]="filmForm" (ngSubmit)="onSubmit()">
         <h4>Secret Lair</h4>
+
         <div class="form-group">
-            <label class="center-block">title:
-                <input class="form-control" formControlName="title">
-            </label>
+            <label for="title" class="center-block">title:</label>
+                <input id="title" class="form-control" formControlName="title" required>
+                <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+                    <span *ngIf="title.errors.required">
+                        Name is required.
+                    </span>
+                    <span *ngIf="title.errors.minlength">
+                        Minimal title lenght is {{ titleLength }}
+                    </span>
+                </div>
         </div>
         <div class="form-group">
             <label class="center-block">year:
@@ -21,6 +30,9 @@
             </label>
         </div>
         <div class="form-row">
-            <button type="submit">Save</button>
+            <button class="btn btn-primary" [disabled]="!filmForm.valid" type="submit" to>Save</button>
+            <button class="btn btn-danger" (click)="resetForm()">Reset</button>
         </div>
+        <p>Form status: {{filmForm.status | json}}</p>
 </form>
+</div>

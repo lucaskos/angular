@@ -1,7 +1,7 @@
 import { User } from './../user';
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -10,12 +10,13 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class UserService {
     private mainUrl = 'http://localhost:8080/filmdb';
+    private tokenName = 'Authorization';
+    private user: User;
 
     constructor(private http: HttpClient) {
     }
 
     login(username: string, password: string): Observable<boolean> {
-
         const login = '/login';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Expose-Headers', 'Authorization');
@@ -27,22 +28,36 @@ export class UserService {
                 const authHeader = response.headers.get('Authorization');
                 // const token = response.json() && response.json().token;
                 const token = response.headers.get('Authorization');
-                console.log(token);
                 if (token) {
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('Authorization', token);
+                    localStorage.setItem(this.tokenName, token);
                     // return true to indicate successful login
-                    console.log('Token set on localStorage :' + localStorage.getItem('Authorization'));
+                    console.log('Token set on localStorage :' + localStorage.getItem(this.tokenName));
                     return true;
                 } else {
                     // return false to indicate failed login
                     return false;
                 }
+            }).catch((err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    // A client-side or network error occurred. Handle it accordingly.
+                    console.error('An error occurred:', err.error.message);
+                } else {
+                    // The backend returned an unsuccessful response code.
+                    // The response body may contain clues as to what went wrong,
+                    console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+                }
+
+                // ...optionally return a default fallback value so app can continue (pick one)
+                // which could be a default value
+                // return Observable.of<any>({my: "default value..."});
+                // or simply an empty observable
+                return new Observable<boolean>();
             });
     }
 
     logout() {
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem(this.tokenName);
     }
 
     register(user: User) {
@@ -51,4 +66,37 @@ export class UserService {
         console.log('User : ' + JSON.stringify(user));
         return this.http.post(this.mainUrl + registerUrl, user);
     }
+
+    getUserToken(): any {
+        return localStorage.getItem(this.tokenName);
+    }
+
+    isAuthenticated(): boolean {
+        const token = localStorage.getItem(this.tokenName);
+
+        if (token != null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    isAdmin(): boolean {
+        let isAdmin = false;
+        const user = this.getUserToken();
+        this.user = this.getUserToken();
+
+        if (user !== null && user !== undefined) {
+            const userRole = user.Role;
+            try {
+                const role = localStorage.getItem('UserRole');
+                console.log(role);
+            } catch (error) {
+                isAdmin = false;
+            }
+        }
+
+        return isAdmin;
+    }
+
 }
