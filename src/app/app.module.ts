@@ -14,7 +14,9 @@ import { AppRoutingModule } from './router/app-routing.module';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RegisterComponent } from './component/user/register/register.component';
-import { PersonComponentComponent } from './component/person/person-component/person-component.component';
+import { PersonComponent } from './component/person/person-component/person.component';
+import {PersonService} from './services/person-service/person.service';
+import { PersonDetailComponent } from './component/person/person-detail/person-detail.component';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { PersonComponentComponent } from './component/person/person-component/pe
     FilmCreateComponent,
     LoginComponent,
     RegisterComponent,
-    PersonComponentComponent
+    PersonComponent,
+    PersonDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { PersonComponentComponent } from './component/person/person-component/pe
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [FilmService, UserService,
+  providers: [FilmService, PersonService, UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
