@@ -1,4 +1,4 @@
-import { User } from './../user';
+import { User } from '../../user';
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -115,7 +115,7 @@ export class UserService {
         const roles = this.getUserRoles();
 
         if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
-            
+
         }
 
         return isPremium;

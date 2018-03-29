@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Film } from './../../film';
+import { Film } from '../../classes/film';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -36,10 +36,10 @@ export class FilmService {
     // return of(FILMS.find(film => film.filmId === id));
   }
 
-  saveFilm(film: Film): Observable<Number> {
-    console.log(film);
-    return null;
-    // return this.http.post<Number>(this.filmUrl, httpOptions);
+  saveFilm(film: Film): any {
+    // console.log(film);
+    // return null;
+    return this.http.post<Number>(this.filmUrl, httpOptions).subscribe(data => console.log('test'));
   }
 
 }

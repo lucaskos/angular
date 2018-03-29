@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
-import { AppRoutingModule } from './../app-routing.module';
-import { UserService } from './../services/user.service';
+import { AppRoutingModule } from '../../../router/app-routing.module';
+import { UserService } from '../../../services/user-service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, FormGroup, FormBuilder } from '@angular/forms';

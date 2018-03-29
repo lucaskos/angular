@@ -1,5 +1,7 @@
+import { Film } from '../../../classes/film';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FilmService } from '../../../services/film-service/film.service';
 
 @Component({
     selector: 'app-film-edit',
@@ -9,6 +11,11 @@ export class FilmCreateComponent implements OnInit {
     filmForm: FormGroup;
     newFilm: string;
     titleLength = 2;
+    film: Film;
+
+    constructor(private filmservice: FilmService) {
+
+    }
 
     ngOnInit(): void {
         this.createForm();
@@ -28,8 +35,10 @@ export class FilmCreateComponent implements OnInit {
 
     onSubmit() {
         if (this.filmForm.valid) {
+            this.film = this.filmForm.value;
             this.newFilm = JSON.stringify(this.filmForm.value);
             console.log(this.newFilm);
+            this.filmservice.saveFilm(this.film);
         }
     }
 

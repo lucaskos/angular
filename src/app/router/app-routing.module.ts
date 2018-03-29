@@ -1,14 +1,14 @@
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { FilmCreateComponent } from './film-detail/film-edit.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { FilmItemComponent } from './film-item/film-item.component';
-import { Film } from './film';
+import { RegisterComponent } from '../component/user/register/register.component';
+import { LoginComponent } from '../component/user/login/login.component';
+import { FilmCreateComponent } from '../component/film/film-detail/film-edit.component';
+import { DashboardComponent } from '../component/dashboard/dashboard.component';
+import { FilmItemComponent } from '../component/film/film-item/film-item.component';
+import { Film } from '../classes/film';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FilmDetailComponent } from './film-detail/film-detail.component';
-import { UserService } from './services/user.service';
+import { FilmDetailComponent } from '../component/film/film-detail/film-detail.component';
+import { UserService } from '../services/user-service/user.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},

@@ -1,7 +1,7 @@
-import { Film } from './../film';
+import { Film } from '../../../classes/film';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FilmService } from '../services/film-service/film.service';
+import { FilmService } from '../../../services/film-service/film.service';
 import { Location } from '@angular/common';
 import { FormControl } from '@angular/forms';
 
