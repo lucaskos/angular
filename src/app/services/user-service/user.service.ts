@@ -9,55 +9,74 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class UserService {
-    private mainUrl = 'http://localhost:8080/filmdb';
+    private mainUrl = 'http://localhost:8080/user/';
     private tokenName = 'Authorization';
     private user: User;
     private roleToken = 'ROLES';
+    private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: HttpClient) {
     }
 
-    login(username: string, password: string): Observable<boolean> {
-        const login = '/login';
-        const headers = new HttpHeaders();
-        headers.append('Access-Control-Expose-Headers', 'Authorization');
+    // login(username: string, password: string): Observable<boolean> {
+    //     const login = 'signin';
+    //     const headers = new HttpHeaders()
+    //       .append('Access-Control-Expose-Headers', 'Authorization');
+    //
+    //     return this.http.post(this.mainUrl + login, JSON.stringify({ username: username, password: password }),
+    //     { headers: headers, observe: 'response' })
+    //         .map((response) => {
+    //             // login successful if there's a jwt token in the response
+    //             const authHeader = response.headers.get('Authorization');
+    //             // const token = response.json() && response.json().token;
+    //             const token = response.headers.get('Authorization');
+    //             const roles = response.headers.get('ROLES');
+    //             if (token) {
+    //                 // store username and jwt token in local storage to keep user logged in between page refreshes
+    //                 localStorage.setItem(this.tokenName, token);
+    //                 // return true to indicate successful login
+    //                 console.log('Token set on localStorage :' + localStorage.getItem(this.tokenName));
+    //                 localStorage.setItem(this.roleToken, roles);
+    //                 return true;
+    //             } else {
+    //                 // return false to indicate failed login
+    //                 return false;
+    //             }
+    //         }).catch((err: HttpErrorResponse) => {
+    //             if (err.error instanceof Error) {
+    //                 // A client-side or network error occurred. Handle it accordingly.
+    //                 console.error('An error occurred:', err.error.message);
+    //             } else {
+    //                 // The backend returned an unsuccessful response code.
+    //                 // The response body may contain clues as to what went wrong,
+    //                 console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+    //             }
+    //
+    //             // ...optionally return a default fallback value so app can continue (pick one)
+    //             // which could be a default value
+    //             // return Observable.of<any>({my: "default value..."});
+    //             // or simply an empty observable
+    //             return new Observable<boolean>();
+    //         });
+    // }
 
-        return this.http.post(this.mainUrl + login, JSON.stringify({ username: username, password: password }),
-        { headers: headers, observe: 'response' })
-            .map((response) => {
-                // login successful if there's a jwt token in the response
-                const authHeader = response.headers.get('Authorization');
-                // const token = response.json() && response.json().token;
-                const token = response.headers.get('Authorization');
-                const roles = response.headers.get('ROLES');
-                if (token) {
-                    // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem(this.tokenName, token);
-                    // return true to indicate successful login
-                    console.log('Token set on localStorage :' + localStorage.getItem(this.tokenName));
-                    localStorage.setItem(this.roleToken, roles);
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
-                }
-            }).catch((err: HttpErrorResponse) => {
-                if (err.error instanceof Error) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    console.error('An error occurred:', err.error.message);
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong,
-                    console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
-                }
+  login(username: string, password: string): Observable<boolean> {
+    return this.http.post(this.mainUrl + login, JSON.stringify({username: username, password: password}), {headers: this.headers})
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let token = response.json() && response.json().token;
+        if (token) {
+          // store username and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
 
-                // ...optionally return a default fallback value so app can continue (pick one)
-                // which could be a default value
-                // return Observable.of<any>({my: "default value..."});
-                // or simply an empty observable
-                return new Observable<boolean>();
-            });
-    }
+          // return true to indicate successful login
+          return true;
+        } else {
+          // return false to indicate failed login
+          return false;
+        }
+      }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
     logout() {
         localStorage.removeItem(this.tokenName);
@@ -65,7 +84,7 @@ export class UserService {
     }
 
     register(user: User) {
-        const registerUrl = '/users/sign-up';
+        const registerUrl = 'sign-up';
 
         console.log('User : ' + JSON.stringify(user));
         return this.http.post(this.mainUrl + registerUrl, user);

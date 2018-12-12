@@ -1,0 +1,13 @@
+<p>
+  person-component works!
+</p>
+<div>
+  <ul class="people">
+    <li *ngFor="let person of people">
+      <a class="person-item" routerLink="/person/{{person.id}}">
+        <span>{{person.firstName}}</span>
+        <span>{{person.lastName}}</span>
+      </a>
+    </li>
+  </ul>
+</div>

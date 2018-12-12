@@ -1,0 +1,21 @@
+<p>
+  person-detail works!
+</p>
+<div>
+  <div class="person-detail">
+    <p>person-detail</p>
+    <div class="person-object" *ngIf="person">
+      <hr />
+      <h2>{{person.firstName | uppercase }} Details</h2>
+      <p>{{person.bio}}</p>
+      <div class="people-list"></div>
+      <hr />
+      <ul>
+       <li *ngFor="let film of person.filmList">
+          <span>{{film.title}}</span>
+          <span>{{film.year}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
