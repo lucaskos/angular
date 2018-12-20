@@ -17,6 +17,7 @@ import { RegisterComponent } from './component/user/register/register.component'
 import { PersonComponent } from './component/person/person-component/person.component';
 import {PersonService} from './services/person-service/person.service';
 import { PersonDetailComponent } from './component/person/person-detail/person-detail.component';
+import {TokenStorage} from "./core/TokenStorage";
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { PersonDetailComponent } from './component/person/person-detail/person-d
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [FilmService, PersonService, UserService,
+  providers: [FilmService, PersonService, UserService, TokenStorage,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

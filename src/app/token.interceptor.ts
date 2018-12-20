@@ -3,28 +3,37 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpUserEvent,
+  HttpInterceptor, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import {TokenStorage} from './core/TokenStorage';
+import {Router} from '@angular/router';
+import 'rxjs/add/operator/do';
+
+const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private token: TokenStorage, private router: Router) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('Authorization');
-    console.log('Storange in the interceptor ' + localStorage.getItem('Authorization'));
-    console.log(request);
-    if (token !== null) {
-      console.log('token is not empty');
-      request = request.clone({
-        setHeaders: {
-          Authorization: token
-        }
-      });
+  intercept(req: HttpRequest<any>, next: HttpHandler):
+  Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+    let authReq = req;
+    if (this.token.getToken() != null) {
+      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + this.token.getToken())});
     }
-    console.log(next);
-    return next.handle(request);
+    return next.handle(authReq).do(
+      (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          console.log(err);
+          console.log('req url :: ' + req.url);
+          if (err.status === 401) {
+            this.router.navigate(['user']);
+          }
+        }
+      }
+    );
   }
 }
