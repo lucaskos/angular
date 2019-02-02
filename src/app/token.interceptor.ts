@@ -1,30 +1,27 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {TokenStorage} from './token-storage';
+import {Router} from '@angular/router';
+
+const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private token: TokenStorage, private router: Router) {
+  }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('Authorization');
-    console.log('Storange in the interceptor ' + localStorage.getItem('Authorization'));
-    console.log(request);
-    if (token !== null) {
-      console.log('token is not empty');
-      request = request.clone({
-        setHeaders: {
-          Authorization: token
-        }
-      });
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    let authReq = req;
+    const token = this.token.getToken();
+    if (token != null) {
+      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, token) });
     }
-    console.log(next);
-    return next.handle(request);
+    return next.handle(authReq);
   }
 }
+
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+];
