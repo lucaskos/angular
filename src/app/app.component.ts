@@ -1,5 +1,6 @@
 import { UserService } from './services/user-service/user.service';
 import { Component } from '@angular/core';
+import {TokenStorage} from './token-storage';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,13 @@ export class AppComponent {
   text: string;
   private isAdmin = false;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private tokenStorage: TokenStorage) {
     this.isAdmin = userService.isAdmin();
   }
 
   get authenticated() {
-    const login = localStorage.getItem('Authorization');
+    const login = this.tokenStorage.getToken();
     if (login != null) {
       return true;
     } else {

@@ -7,6 +7,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
+import {TokenStorage} from '../../token-storage';
+import {Token} from '../../../../Token';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,30 +16,31 @@ const httpOptions = {
 
 @Injectable()
 export class UserService {
-  private mainUrl = 'http://localhost:8080/token/generate-token';
+  private mainUrl = 'http://localhost:8080';
+  private checkEmail = '/user/register/checkEmail/';
+  private generateTokenUrl = '/token/generate-token';
   private tokenName = 'Authorization';
   private user: User;
   private roleToken = 'ROLES';
+  private isEmailExist: Object;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {
   }
 
-  login(username: string, password: string): Observable<Object> {
-    // const login = '/login';
+  login(username: string, password: string): Observable<Token> {
     const credentials = {username: username, password: password};
-    const observable = this.http.post('http://localhost:8080/token/generate-token', credentials, httpOptions).pipe(
+    const observable = this.http.post(this.mainUrl + this.generateTokenUrl, credentials, httpOptions).pipe(
       catchError(val => of(val))
     );
     return observable;
   }
 
   logout() {
-    localStorage.removeItem(this.tokenName);
-    localStorage.removeItem(this.roleToken);
+    this.tokenStorage.signOut();
   }
 
   register(user: User) {
-    const registerUrl = '/users/sign-up';
+    const registerUrl = '/user/register';
 
     console.log('User : ' + JSON.stringify(user));
     return this.http.post(this.mainUrl + registerUrl, user);
@@ -92,6 +95,16 @@ export class UserService {
 
     return isPremium;
 
+  }
+
+  isEmailExists(email: string): Object {
+    const apiUrl = this.mainUrl + this.checkEmail + email;
+    this.http.get(apiUrl)
+      .map(response =>
+        response
+      )
+      .subscribe(response => this.isEmailExist = response);
+    return this.isEmailExist;
   }
 
 }

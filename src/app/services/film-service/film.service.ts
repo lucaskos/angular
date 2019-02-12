@@ -14,19 +14,19 @@ export class FilmService {
   films: Observable<Film[]>;
   film: Observable<Film>;
   newFilms: Film[] = [];
-  filmUrl = 'http://localhost:8080/filmdb/film';
+  filmUrl = 'http://localhost:8080/film/';
 
   constructor(private http: HttpClient) {
   }
 
   getFilms(): Observable<Film[]> {
     console.log('getFilms() service');
-    return this.http.get<Film[]>(this.filmUrl, httpOptions);
+    return this.http.get<Film[]>(this.filmUrl + 'list', httpOptions);
   }
 
   /** GET film by id */
   getFilm(id: number): Observable<Film> {
-    const url = `${this.filmUrl}/${id}`;
+    const url = `${this.filmUrl}film/${id}`;
     this.film = this.http.get<Film>(url, httpOptions);
     if (this.film != null) {
       this.film.subscribe(res => console.log(res));

@@ -1,24 +1,33 @@
 <div class="film-item">
   <p>film-item</p>
   <p>
-  {{test}}
-</p>
-<div>
-  <ul class="films">
-    <li *ngFor="let film of films">
-      <a class="film-item" routerLink="/film/{{film.filmId}}">
-      <span><b>{{film.title}}</b> - {{film.year}}</span>
-      <span><i>{{film.description}}</i></span>
-      <span>{{film.description}}</span>
-      <td>
-        <button type="button" (click)="loadFilmToEdit(film.filmId)">Edit</button>
-      </td>
-      <td>
-        <button type="button" (click)="deleteFilm(film.filmId)">Delete</button>
-      </td>
-          <hr />
-              </a>
-    </li>
-  </ul>
-</div>
+    {{test}}
+  </p>
+  <div>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let film of films">
+        <a
+          class="list-group-item list-group-item-action"
+          routerLink="/film/{{film.filmId}}"
+        >
+          <span><b>{{film.title}}</b></span>
+          <div class="justify-content-between"><p class="font-weight-bold">{{ film.year }}<p>{{ film.description }}</div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-sm btn-primary float-left"
+              (click)="loadFilmToEdit(film.filmId)">
+              Edit
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-danger float-right"
+              (click)="deleteFilm(film.filmId)">
+              Delete
+            </button>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
 import {TokenStorage} from './token-storage';
 import {Router} from '@angular/router';
 
@@ -16,12 +15,8 @@ export class TokenInterceptor implements HttpInterceptor {
     let authReq = req;
     const token = this.token.getToken();
     if (token != null) {
-      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, token) });
+      authReq = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, token)});
     }
     return next.handle(authReq);
   }
 }
-
-export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
-];
