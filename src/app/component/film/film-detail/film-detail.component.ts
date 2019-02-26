@@ -1,47 +1,40 @@
 import { Film } from '../../../classes/film';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilmService } from '../../../services/film-service/film.service';
-import { Location } from '@angular/common';
-import { FormControl } from '@angular/forms';
 
-@Component({
+@Component( {
   selector: 'app-film-detail',
   templateUrl: './film-detail.component.html',
-  styleUrls: ['./film-detail.component.css']
-})
+  styleUrls: [ './film-detail.component.css' ]
+} )
 export class FilmDetailComponent implements OnInit {
-// name here must correspond to the name in the html
-// if the name in the top file is different it doesn't matter
-  @Input() film: Film;
-  title = new FormControl;
+  @Output() film: Film;
+  toggleEdit = false;
+  id: number;
 
-  constructor(
-    private filmService: FilmService,
-    private route: ActivatedRoute,
-    private location: Location) {
+  constructor(private filmService: FilmService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.getFilm();
+    this.id = +this.route.snapshot.paramMap.get( 'id' );
+    this.filmService.getFilm( this.id ).subscribe(
+      (film: Film) => this.film = film,
+      (error) => console.log( 'error: ' + error )
+    );
   }
 
-  getFilm(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    if (id == null || id === 0) {
-      console.log('Wrong id value!');
+  deleteFilm() {
+    console.log( this.film );
+  }
+
+  loadFilmToEdit(): void {
+    if (this.toggleEdit) {
+      this.toggleEdit = false;
     } else {
-    this.filmService.getFilm(id)
-      .subscribe(film => this.film = film);
+      this.toggleEdit = true;
     }
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  save(): void {
-    this.filmService.saveFilm(this.film).subscribe(() => this.goBack());
   }
 
 }

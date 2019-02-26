@@ -1,7 +1,7 @@
 import {TokenInterceptor} from './token.interceptor';
 import {UserService} from './services/user-service/user.service';
 import {LoginComponent} from './component/user/login/login.component';
-import {FilmCreateComponent} from './component/film/film-detail/film-edit.component';
+import {FilmCreateComponent} from './component/film/film-edit/film-edit.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
@@ -17,6 +17,7 @@ import {PersonComponent} from './component/person/person-component/person.compon
 import {PersonService} from './services/person-service/person.service';
 import {PersonDetailComponent} from './component/person/person-detail/person-detail.component';
 import {TokenStorage} from './token-storage';
+import { TestComponentComponent } from './component/test-component/test-component.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {TokenStorage} from './token-storage';
     LoginComponent,
     RegisterComponent,
     PersonComponent,
-    PersonDetailComponent
+    PersonDetailComponent,
+    TestComponentComponent
   ],
   imports: [
     BrowserModule,

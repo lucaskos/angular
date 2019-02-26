@@ -1,25 +1,41 @@
-<div class="film-detail" xmlns:style="http://www.w3.org/1999/xhtml">
-  <p>film-detail</p>
-  <div class="film-object" *ngIf="film">
-    <hr/>
-    <h2>{{ film.title | uppercase }} Details</h2>
-    <div>
-      <p>{{film.year}}</p>
-      <p>{{film.description}}</p>
-      <div class="people-list"></div>
-      <hr/>
-      <ul class="list-group">
-        <li
-          *ngFor="let person of film.peopleList"
-          class="list-group-item"
-        >
-          <a [routerLink]="" (click)="alert(person.id)">
-            {{ person.id }}
-            {{ person.firstName }}
-            {{ person.lastName }}
-          </a>
-        </li>
-      </ul>
+<div>
+  <div class="jumbotron filmDetail">
+    <div *ngIf="film">
+      <h1>{{ film.title | uppercase }} Details</h1>
+      <div>
+        <p>{{film.year}}</p>
+        <p>{{film.description}}</p>
+        <div class="people-list"></div>
+        <hr/>
+        <div class="col-6 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
+          <ul class="list-group">
+            <li
+              *ngFor="let person of film.peopleList"
+              class="list-group-item"
+            >
+              {{ person.firstName }} <strong>{{ person.lastName }}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
+      <button
+        type="button"
+        class="btn btn-sm btn-primary float-left"
+        (click)="loadFilmToEdit()">
+        Edit1
+      </button>
+      <button
+        type="button"
+        class="btn btn-sm btn-danger float-right"
+        (click)="deleteFilm(film.filmId)">
+        Delete
+      </button>
     </div>
   </div>
+  <div *ngIf="toggleEdit">
+    <app-film-edit [film]="film"></app-film-edit>
+  </div>
+
 </div>

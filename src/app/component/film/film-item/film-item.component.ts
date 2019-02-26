@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Film } from '../../../classes/film';
 import { Component, OnInit } from '@angular/core';
 import {FilmService} from '../../../services/film-service/film.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-film-item',
@@ -15,7 +16,8 @@ export class FilmItemComponent implements OnInit {
   filmDetail: Film;
   collection: Observable<Film[]>;
 
-  constructor(private filmservice: FilmService) {
+  constructor(private filmservice: FilmService,
+              private router: Router) {
 
   }
 
@@ -25,22 +27,12 @@ export class FilmItemComponent implements OnInit {
   }
 
   getFilms(): void {
-    console.log('get films');
     this.collection = this.filmservice.getFilms();
-    console.log(this.collection);
     this.filmservice.getFilms()
       .subscribe(film => this.films = film);
   }
 
-  onSelect(film: Film): void {
-    if (this.filmDetail === film) {
-      this.filmDetail = undefined;
-    } else {
-      this.filmDetail = film;
-    }
-  }
-
-  loadFilmToEdit(film: Film): void {
-    this.filmDetail = film;
+  addNew(): void {
+    this.router.navigate(['film/new']);
   }
 }

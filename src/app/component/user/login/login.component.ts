@@ -24,13 +24,21 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    console.log('logging');
     this.loading = true;
     this.userService.login(this.model.username, this.model.password)
       .subscribe(
         data => {
+          console.log('data : ' + data);
            this.token.saveToken(data.token); //todo cast to object
            this.router.navigate(['/films']);
-        }
+        },
+        (error => {
+          console.log(error.getMessages());
+          console.log(error);
+          console.log('bład w logowaniu');
+        })
       );
+
   }
 }

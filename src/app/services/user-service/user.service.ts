@@ -1,17 +1,17 @@
-import {User} from '../../user';
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import { User } from '../../user';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs/observable/of';
-import {TokenStorage} from '../../token-storage';
-import {Token} from '../../../../Token';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { TokenStorage } from '../../token-storage';
+import { Token } from '../../../../Token';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
 };
 
 @Injectable()
@@ -29,8 +29,30 @@ export class UserService {
 
   login(username: string, password: string): Observable<Token> {
     const credentials = {username: username, password: password};
-    const observable = this.http.post(this.mainUrl + this.generateTokenUrl, credentials, httpOptions).pipe(
-      catchError(val => of(val))
+    let test: string;
+    const observable1 = this.http.post( this.mainUrl + this.generateTokenUrl, credentials, httpOptions )
+      .map( (res: any) => {
+        if (res == null) {
+          test = res;
+        }
+      }
+      ).catch(error => Observable.throw(error));
+    console.log( test );
+    console.log( observable1 );
+
+
+    observable1.subscribe(
+      data => {
+        console.log( data );
+      },
+      error2 => {
+        console.log( error2 );
+      }
+    )
+
+
+    const observable = this.http.post( this.mainUrl + this.generateTokenUrl, credentials, httpOptions ).pipe(
+      catchError( val => of( val ) )
     );
     return observable;
   }
@@ -42,20 +64,20 @@ export class UserService {
   register(user: User) {
     const registerUrl = '/user/register';
 
-    console.log('User : ' + JSON.stringify(user));
-    return this.http.post(this.mainUrl + registerUrl, user);
+    console.log( 'User : ' + JSON.stringify( user ) );
+    return this.http.post( this.mainUrl + registerUrl, user );
   }
 
   getUserToken(): any {
-    return localStorage.getItem(this.roleToken);
+    return localStorage.getItem( this.roleToken );
   }
 
   getUserRoles(): String {
-    return localStorage.getItem(this.roleToken);
+    return localStorage.getItem( this.roleToken );
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.tokenName);
+    const token = localStorage.getItem( this.tokenName );
 
     if (token != null) {
       return true;
@@ -72,8 +94,8 @@ export class UserService {
     if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
       const userRole = user.Role;
       try {
-        const role = localStorage.getItem(this.roleToken);
-        if (roles.match('ROLE_ADMIN') !== null) {
+        const role = localStorage.getItem( this.roleToken );
+        if (roles.match( 'ROLE_ADMIN' ) !== null) {
           isAdmin = true;
         }
       } catch (error) {
@@ -99,11 +121,11 @@ export class UserService {
 
   isEmailExists(email: string): Object {
     const apiUrl = this.mainUrl + this.checkEmail + email;
-    this.http.get(apiUrl)
-      .map(response =>
+    this.http.get( apiUrl )
+      .map( response =>
         response
       )
-      .subscribe(response => this.isEmailExist = response);
+      .subscribe( response => this.isEmailExist = response );
     return this.isEmailExist;
   }
 

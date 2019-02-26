@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Person} from '../../classes/person';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -10,7 +11,7 @@ const httpOptions = {
 
 @Injectable()
 export class PersonService {
-  personUrl = 'http://localhost:8080/filmdb/person';
+  personUrl = environment.baseUrl + 'person';
   people: Observable<Person[]>;
 
   constructor(private httpClient: HttpClient) { }
@@ -36,5 +37,9 @@ export class PersonService {
   deletePerson(person: Person) {
 
 }
+
+  findByNameAndSurname(name: String): Observable<Person[]> {
+    return this.httpClient.get<Person[]>(this.personUrl + '/name/' + name, httpOptions);
+  }
 
 }

@@ -8,26 +8,18 @@
       <li class="list-group-item" *ngFor="let film of films">
         <a
           class="list-group-item list-group-item-action"
-          routerLink="/film/{{film.filmId}}"
+          [routerLink]="film.filmId"
         >
           <span><b>{{film.title}}</b></span>
           <div class="justify-content-between"><p class="font-weight-bold">{{ film.year }}<p>{{ film.description }}</div>
-          <div>
-            <button
-              type="button"
-              class="btn btn-sm btn-primary float-left"
-              (click)="loadFilmToEdit(film.filmId)">
-              Edit
-            </button>
-            <button
-              type="button"
-              class="btn btn-sm btn-danger float-right"
-              (click)="deleteFilm(film.filmId)">
-              Delete
-            </button>
-          </div>
         </a>
       </li>
     </ul>
   </div>
+  <button
+    type="button"
+    class="btn btn-sm btn-primary float-left"
+    (click)="addNew()">
+    Add new
+  </button>
 </div>
