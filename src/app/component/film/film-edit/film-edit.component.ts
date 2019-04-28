@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { FilmService } from '../../../services/film-service/film.service';
 import { Person } from '../../../classes/person';
 import { PersonService } from '../../../services/person-service/person.service';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-film-edit',
@@ -27,7 +28,8 @@ export class FilmCreateComponent implements OnInit {
 
   constructor(private filmService: FilmService,
               private formBuilder: FormBuilder,
-              private personService: PersonService) {
+              private personService: PersonService,
+              private router: Router) {
 
     this.createForm();
 
@@ -74,9 +76,6 @@ export class FilmCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log( this.deletedPeople );
-    console.log( this.peopleToAdd );
-    console.log( this.filmForm );
     if (this.filmForm.valid) {
 
       // this.film.title = this.filmForm.controls.title.value;
@@ -84,8 +83,8 @@ export class FilmCreateComponent implements OnInit {
       if (!this.film) {
         this.film = new Film( null,
           this.filmForm.get( 'title' ).value,
-          this.filmForm.get( 'description' ).value,
           this.filmForm.get( 'year' ).value,
+          this.filmForm.get( 'description' ).value,
           null );
       } else {
         this.film.title = this.filmForm.get( 'title' ).value;
@@ -95,8 +94,10 @@ export class FilmCreateComponent implements OnInit {
       // this.film = this.filmForm.value;
       this.newFilm = JSON.stringify( this.filmForm.value );
       console.log( this.newFilm );
-      this.filmService.saveFilm( this.film );
 
+      this.film = this.filmService.saveFilm( this.film );
+
+      this.router.navigate( [ 'films/', this.film.filmId ] );
     }
   }
 

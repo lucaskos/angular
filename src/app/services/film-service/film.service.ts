@@ -3,6 +3,7 @@ import { Film } from '../../classes/film';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs/Subscription';
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -45,24 +46,25 @@ export class FilmService {
     // return of(FILMS.find(film => film.filmId === id));
   }
 
-  saveFilm(film: Film): any {
+    saveFilm(film: Film): Film {
     // console.log(film);
     // return null;
     if (film.filmId) {
-      return this.http.put<Film>( this.filmUrl + film.filmId, film, httpOptions ).subscribe(
-        data => console.log( data ),
-        error2 => {
-          console.log( error2 );
-        }
-      );
+      this.http.put<Film>( this.filmUrl + film.filmId, film, httpOptions ).subscribe( data => {
+        this.film = data;
+      });
     } else {
-      return this.http.put<Film>( this.filmUrl + 'add', film, httpOptions ).subscribe(
-        data => console.log( data ),
-        error2 => {
-          console.log( error2 );
-        }
-      );
+      this.http.post<Film>( this.filmUrl + 'add', film, httpOptions ).subscribe( data => {
+        this.film = data;
+
+      });
+      this.updateFilm();
+      return this.film;
     }
+
+  }
+  updateFilm() {
+    console.log(this.film);
   }
 
   private extractData(response: Response) {

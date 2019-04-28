@@ -13,18 +13,8 @@ import { TestComponentComponent } from '../component/test-component/test-compone
 const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
-
-  {path: 'films', component: FilmItemComponent},
-  {
-    path: 'films/:id',
-    component: FilmDetailComponent,
-    children: [ {path: 'edit', component: FilmCreateComponent} ]
-  },
-  {path: 'film/new', component: FilmCreateComponent},
-
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-
   {path: 'person', component: PersonComponent},
   {path: 'person/:id', component: PersonDetailComponent}
 ];
