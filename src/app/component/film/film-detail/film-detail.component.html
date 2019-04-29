@@ -35,7 +35,7 @@
     </div>
   </div>
   <div *ngIf="toggleEdit">
-    <app-film-edit [film]="film"></app-film-edit>
+    <app-film-edit (notifyOfSavedCompletted)="getSavedNotification($event)" [film]="film"></app-film-edit>
   </div>
 
 </div>

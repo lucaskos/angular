@@ -1,5 +1,5 @@
 import { Film } from '../../../classes/film';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilmService } from '../../../services/film-service/film.service';
 
@@ -35,6 +35,10 @@ export class FilmDetailComponent implements OnInit {
     } else {
       this.toggleEdit = true;
     }
+  }
+
+  getSavedNotification(evt) {
+    this.toggleEdit = !evt;
   }
 
 }

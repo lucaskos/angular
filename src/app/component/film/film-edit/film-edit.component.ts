@@ -1,6 +1,6 @@
 import { Film } from '../../../classes/film';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FilmService } from '../../../services/film-service/film.service';
 import { Person } from '../../../classes/person';
 import { PersonService } from '../../../services/person-service/person.service';
@@ -16,6 +16,8 @@ export class FilmCreateComponent implements OnInit {
   titleLength = 2;
   @Input() film: Film;
   id: number;
+  @Output() notifyOfSavedCompletted = new EventEmitter();
+  isLoaded;
 
   deletedPeople: Person[] = new Array();
   peopleToAdd: FormGroup;
@@ -27,7 +29,6 @@ export class FilmCreateComponent implements OnInit {
   roleValue: String;
 
   constructor(private filmService: FilmService,
-              private formBuilder: FormBuilder,
               private personService: PersonService,
               private router: Router) {
 
@@ -35,9 +36,12 @@ export class FilmCreateComponent implements OnInit {
 
   }
 
+  filmUpdatedSuccessfully() {
+    this.notifyOfSavedCompletted.emit( true );
+  }
+
   ngOnInit(): void {
-    console.log( this.film );
-    if(this.film) {
+    if (this.film) {
       this.filmForm = new FormGroup( {
         'title': new FormControl( this.film.title, [
           Validators.required,
@@ -49,10 +53,6 @@ export class FilmCreateComponent implements OnInit {
         'peopleList': new FormArray( this.getPeopleControlls( this.film.peopleList ) )
       } );
     }
-
-    // (<FormArray>this.filmForm.controls.actors).push( new FormControl( 'test' ) );
-    // (<FormArray>this.filmForm.controls.actors).push( new FormControl( 'test1' ) );
-    console.log( this.filmForm );
   }
 
   onEditCancel() {
@@ -77,9 +77,6 @@ export class FilmCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.filmForm.valid) {
-
-      // this.film.title = this.filmForm.controls.title.value;
-
       if (!this.film) {
         this.film = new Film( null,
           this.filmForm.get( 'title' ).value,
@@ -91,13 +88,15 @@ export class FilmCreateComponent implements OnInit {
         this.film.description = this.filmForm.get( 'description' ).value;
         this.film.year = this.filmForm.get( 'year' ).value;
       }
-      // this.film = this.filmForm.value;
-      this.newFilm = JSON.stringify( this.filmForm.value );
-      console.log( this.newFilm );
+      this.filmService.saveFilm( this.film ).map( res => {
+        return res;
+      } ).subscribe( data => {
+        this.isLoaded = true;
+        this.film = data;
+        this.filmUpdatedSuccessfully();
+        this.router.navigate( [ 'films/', this.film.filmId ] );
+      } );
 
-      this.film = this.filmService.saveFilm( this.film );
-
-      this.router.navigate( [ 'films/', this.film.filmId ] );
     }
   }
 
