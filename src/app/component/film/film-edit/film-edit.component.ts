@@ -36,8 +36,8 @@ export class FilmCreateComponent implements OnInit {
 
   }
 
-  filmUpdatedSuccessfully() {
-    this.notifyOfSavedCompletted.emit( true );
+  filmUpdatedSuccessfully(edited: boolean) {
+    this.notifyOfSavedCompletted.emit( edited );
   }
 
   ngOnInit(): void {
@@ -56,7 +56,8 @@ export class FilmCreateComponent implements OnInit {
   }
 
   onEditCancel() {
-    // this.router.navigate( [ 'films/', this.id ] );
+    //this.router.navigate( [ 'films/', this.id ] );
+    this.filmUpdatedSuccessfully(true);
   }
 
   createForm() {
@@ -93,7 +94,7 @@ export class FilmCreateComponent implements OnInit {
       } ).subscribe( data => {
         this.isLoaded = true;
         this.film = data;
-        this.filmUpdatedSuccessfully();
+        this.filmUpdatedSuccessfully(true);
         this.router.navigate( [ 'films/', this.film.filmId ] );
       } );
 
