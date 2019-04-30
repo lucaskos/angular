@@ -1,6 +1,6 @@
 import { Film } from '../../../classes/film';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FilmService } from '../../../services/film-service/film.service';
 
 @Component( {
@@ -14,7 +14,8 @@ export class FilmDetailComponent implements OnInit {
   id: number;
 
   constructor(private filmService: FilmService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -26,7 +27,12 @@ export class FilmDetailComponent implements OnInit {
   }
 
   deleteFilm() {
-    console.log( this.film );
+    this.filmService.delete( this.film ).subscribe( () => {
+        this.router.navigate( [ 'films/' ] );
+      },
+      (error => {
+        console.log( error );
+      }) );
   }
 
   loadFilmToEdit(): void {

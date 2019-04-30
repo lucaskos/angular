@@ -44,6 +44,10 @@ export class FilmService {
     console.log( this.film );
   }
 
+  delete(film: Film): Observable<{}> {
+    return this.http.delete(this.filmUrl + film.filmId, httpOptions);
+  }
+
   private extractData(response: Response) {
     if (response.status < 200 || response.status >= 300) {
       throw new Error( 'Bad response status: ' + response.status );

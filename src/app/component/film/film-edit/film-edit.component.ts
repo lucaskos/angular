@@ -56,7 +56,6 @@ export class FilmCreateComponent implements OnInit {
   }
 
   onEditCancel() {
-    //this.router.navigate( [ 'films/', this.id ] );
     this.filmUpdatedSuccessfully(true);
   }
 
