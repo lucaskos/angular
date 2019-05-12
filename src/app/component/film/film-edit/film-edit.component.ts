@@ -12,12 +12,13 @@ import { Router } from '@angular/router';
 } )
 export class FilmCreateComponent implements OnInit {
   filmForm: FormGroup;
-  newFilm: string;
   titleLength = 2;
   @Input() film: Film;
   id: number;
+
   @Output() notifyOfSavedCompletted = new EventEmitter();
   isLoaded;
+  person: String;
 
   deletedPeople: Person[] = new Array();
   peopleToAdd: FormGroup;
@@ -48,15 +49,14 @@ export class FilmCreateComponent implements OnInit {
           Validators.minLength( this.titleLength )
         ] ),
         'year': new FormControl( this.film.year ),
-        'description': new FormControl( this.film.description )
-        ,
+        'description': new FormControl( this.film.description ),
         'peopleList': new FormArray( this.getPeopleControlls( this.film.peopleList ) )
       } );
     }
   }
 
   onEditCancel() {
-    this.filmUpdatedSuccessfully(true);
+    this.filmUpdatedSuccessfully( true );
   }
 
   createForm() {
@@ -70,9 +70,9 @@ export class FilmCreateComponent implements OnInit {
     } );
 
     this.peopleToAdd = new FormGroup( {
-        'people': new FormArray( [] )
-      }
-    );
+      'people': new FormArray( [] ),
+      'person': new FormControl( null )
+    } );
   }
 
   onSubmit() {
@@ -93,7 +93,7 @@ export class FilmCreateComponent implements OnInit {
       } ).subscribe( data => {
         this.isLoaded = true;
         this.film = data;
-        this.filmUpdatedSuccessfully(true);
+        this.filmUpdatedSuccessfully( true );
         this.router.navigate( [ 'films/', this.film.filmId ] );
       } );
 
@@ -140,13 +140,21 @@ export class FilmCreateComponent implements OnInit {
     if (name !== '' && name.length > 3) {
       const people = this.personService.findByNameAndSurname( name );
 
-      console.log( people );
-
       people.subscribe(
-        (persons: Person[]) => this.found = persons,
+        (persons: Person[]) => {
+          // this.found = persons
+          if (this.film.peopleList != null && this.film.peopleList.length > 0) {
+            this.found = this.film.peopleList.filter( function (person) {
+              return !persons.find( function (subscribePerson) {
+                return subscribePerson.id === person.id;
+              } );
+            } );
+          } else {
+            this.found = persons;
+          }
+        },
         (error) => console.log( 'error: ' + error )
       );
-      console.log( this.found );
     }
   }
 
