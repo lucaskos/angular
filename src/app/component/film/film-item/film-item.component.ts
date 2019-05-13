@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
   providers: [FilmService]
 })
 export class FilmItemComponent implements OnInit {
-  test = 'List of films';
   films: Film[];
   filmDetail: Film;
   collection: Observable<Film[]>;

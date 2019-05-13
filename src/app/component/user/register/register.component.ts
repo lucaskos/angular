@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
       firstName: new FormControl( null ),
       lastName: new FormControl( null ),
       username: new FormControl( null, [ Validators.required ] ),
-      email: new FormControl( null, [ Validators.required, Validators.email ], this.isEmailCorrect.bind( this ) ),
+      email: new FormControl( null, [ Validators.required, Validators.email, this.isEmailCorrect.bind( this )] ),
       passwords: new FormGroup( {
         password: new FormControl( null, Validators.required ),
         rePassword: new FormControl( null, Validators.required )
@@ -37,11 +37,11 @@ export class RegisterComponent implements OnInit {
   register() {
     console.log( this.registerForm )
     this.loading = true;
-    if (!this.tokenStorage.getToken()) {
+    if (!this.tokenStorage.getToken() && this.registerForm.valid) {
       this.userService.register( this.formToUserData( this.registerForm ) )
         .subscribe(
           data => {
-            this.router.navigate( [ 'films' ] );
+            this.router.navigate( [ 'login' ] );
           },
           error => {
             this.loading = false;
@@ -50,19 +50,17 @@ export class RegisterComponent implements OnInit {
             console.log('complete');
           });
     } else {
-      console.log( 'cannot create user' );
+      console.log( 'cannot create user form invalid' );
+      alert('Error  in form.')
     }
   }
 
-  private isEmailCorrect(control: FormControl): Promise<any> | Observable<any> {
-    const ob = new Promise( (resolve, reject) => {
-      if (this.userService.isEmailExists( control.value )) {
-        resolve( {emailIsTaken: true} );
-      } else {
-        resolve( null );
-      }
-    } );
-    return ob;
+  private isEmailCorrect(control: FormControl): boolean {
+    let valid = true;
+    this.userService.isEmailExists(control.value).subscribe(
+      value => valid = false
+    );
+    return valid;
   }
 
   private formToUserData(form: FormGroup): User {

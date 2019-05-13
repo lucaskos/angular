@@ -13,10 +13,7 @@ const httpOptions = {
 export class FilmService {
   films: Observable<Film[]>;
   film: Film;
-  observable: Observable<Film>;
-  newFilms: Film[] = [];
   filmUrl = environment.baseUrl + 'film/';
-  throwError: any;
 
   constructor(private http: HttpClient) {
   }
@@ -45,7 +42,7 @@ export class FilmService {
   }
 
   delete(film: Film): Observable<{}> {
-    return this.http.delete(this.filmUrl + film.filmId, httpOptions);
+    return this.http.delete( this.filmUrl + film.filmId, httpOptions );
   }
 
   private extractData(response: Response) {

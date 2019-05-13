@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TokenStorage } from '../../token-storage';
 import { Token } from '../../../../Token';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -16,40 +17,19 @@ const httpOptions = {
 
 @Injectable()
 export class UserService {
-  private mainUrl = 'http://localhost:8080';
-  private checkEmail = '/user/register/checkEmail/';
-  private generateTokenUrl = '/token/generate-token';
+  private mainUrl = environment.baseUrl;
+  private checkEmail = 'user/register/checkEmail/';
+  private generateTokenUrl = 'token/generate-token';
   private tokenName = 'Authorization';
   private user: User;
   private roleToken = 'ROLES';
-  private isEmailExist: Object;
+  private isEmailExist: Observable<boolean>;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorage) {
   }
 
   login(username: string, password: string): Observable<Token> {
     const credentials = {username: username, password: password};
-    let test: string;
-    const observable1 = this.http.post( this.mainUrl + this.generateTokenUrl, credentials, httpOptions )
-      .map( (res: any) => {
-        if (res == null) {
-          test = res;
-        }
-      }
-      ).catch(error => Observable.throw(error));
-    console.log( test );
-    console.log( observable1 );
-
-
-    observable1.subscribe(
-      data => {
-        console.log( data );
-      },
-      error2 => {
-        console.log( error2 );
-      }
-    )
-
 
     const observable = this.http.post( this.mainUrl + this.generateTokenUrl, credentials, httpOptions ).pipe(
       catchError( val => of( val ) )
@@ -62,7 +42,7 @@ export class UserService {
   }
 
   register(user: User) {
-    const registerUrl = '/user/register';
+    const registerUrl = 'user/register';
 
     console.log( 'User : ' + JSON.stringify( user ) );
     return this.http.post( this.mainUrl + registerUrl, user );
@@ -119,14 +99,10 @@ export class UserService {
 
   }
 
-  isEmailExists(email: string): Object {
+  isEmailExists(email: string): Observable<boolean> {
     const apiUrl = this.mainUrl + this.checkEmail + email;
-    this.http.get( apiUrl )
-      .map( response =>
-        response
-      )
-      .subscribe( response => this.isEmailExist = response );
-    return this.isEmailExist;
+    return this.http.get<boolean>( apiUrl );
+    // return this.isEmailExist;
   }
 
 }

@@ -1,9 +1,5 @@
 <div class="film-item">
-  <p>film-item</p>
-  <p>
-    {{test}}
-  </p>
-  <div>
+  <div class="container">
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let film of films">
         <a
@@ -11,15 +7,18 @@
           [routerLink]="film.filmId"
         >
           <span><b>{{film.title}}</b></span>
-          <div class="justify-content-between"><p class="font-weight-bold">{{ film.year }}<p>{{ film.description }}</div>
+          <div class="justify-content-between"><p class="font-weight-bold">{{ film.year }}
+            <p>{{ film.description }}</div>
         </a>
       </li>
     </ul>
   </div>
-  <button
-    type="button"
-    class="btn btn-sm btn-primary float-left"
-    (click)="addNew()">
-    Add new
-  </button>
+  <div class="container">
+    <button
+      type="button"
+      class="btn btn-sm btn-primary float-left"
+      (click)="addNew()">
+      Add new
+    </button>
+  </div>
 </div>
