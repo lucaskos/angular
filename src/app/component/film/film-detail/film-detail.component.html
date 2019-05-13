@@ -1,4 +1,4 @@
-<div>
+<div class="container">
   <div class="jumbotron filmDetail">
     <div *ngIf="film">
       <h1>{{ film.title | uppercase }} Details</h1>
@@ -7,11 +7,11 @@
         <p>{{film.description}}</p>
         <div class="people-list"></div>
         <hr/>
-        <div class="col-6 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
+        <div class="container">
           <ul class="list-group">
             <li
               *ngFor="let person of film.peopleList"
-              class="list-group-item"
+              class="list-group-item list-group-item-primary"
             >
               {{ person.firstName }} <strong>{{ person.lastName }}</strong>
             </li>

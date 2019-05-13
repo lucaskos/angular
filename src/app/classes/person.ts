@@ -5,7 +5,7 @@ export class Person {
               public firstName: string,
               public lastName: string,
               public filmList: Film[],
-              public role: string) {
+              public role: String[]) {
   }
 
 }

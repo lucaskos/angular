@@ -28,33 +28,40 @@
       <div *ngIf="film !== undefined">
         <ul *ngFor="let person of film.peopleList"
             class="list-group-item-info">
-          <li><strong>{{ person.role }}:</strong> {{ person.firstName }} <strong> {{ person.lastName }}</strong> <span (click)="onRemoveActor(person.id)"
-                                                                                   class="glyphicon glyphicon-minus"></span>
+          <li><strong>{{ person.role }}:</strong> {{ person.firstName }} <strong> {{ person.lastName }}</strong> <span
+            (click)="onRemoveActor(person.id)"
+            class="glyphicon glyphicon-minus"></span>
           </li>
         </ul>
       </div>
     </div>
+
     <form [formGroup]="peopleToAdd">
-    <!--<div formGroupName="peopleList">-->
-    <div>
-      <h4>Actors</h4>
-      <button class="btn btn-default" type="button" (click)="onAddActor()">Find actor</button>
-      <!--<div class="form-group" *ngFor="let person of this.peopleToAdd.get('people').controls; let i = index">-->
-      <!--<input type="text" class="form-control" [formControlName]="i" (keyup)="onFindPerson()"/>-->
-      <!--</div>-->
-      <input type="text" class="form-control" formControlName="person" #a (keyup)="onFindPerson(a)">
-      <div class="form-group" *ngFor="let person of this.found">
-        <ul>
-          <li>{{ person.firstName }} {{ person.lastName }}
-            <!--<select [ngModel]="roleValue" [ngModelOptions]="{standalone: true}" (ngModelChange)="onchange(person, $event)">-->
-              <!--<option *ngFor="let role of options">{{role}}</option>-->
-            <!--</select>-->
-            <span (click)="onAddPerson(person, roleValue)"
-                  class="glyphicon glyphicon-plus"></span></li>
-        </ul>
+      <!--<div formGroupName="peopleList">-->
+      <div>
+        <h4>Actors</h4>
+        <!--<div class="form-group" *ngFor="let person of this.peopleToAdd.get('people').controls; let i = index">-->
+        <!--<input type="text" class="form-control" [formControlName]="i" (keyup)="onFindPerson()"/>-->
+        <!--</div>-->
+        <input type="text" class="form-control" formControlName="person" #a (keyup)="onFindPerson(a)">
+
+        <div class="form-group" *ngFor="let person of this.found">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-primary" (click)="onAddPerson(person, roleValue)">{{ person.firstName }} {{ person.lastName }}
+              <!--<select [(ngModel)]="roleValue" (ngModelChange)="onChange(person, $event)">-->
+              <!--(ngModelChange)="onchange(person, $event)">-->
+              <!--<select *ngFor="let role of options" [ngValue]="role">{{role}}</select>-->
+              <!--</select>-->
+              <!--<select (onChange)="onSelectRole(role)">-->
+                <!--<option [ngValue]="roleValue" *ngFor="let role of person.role">-->
+                  <!--{{role}}-->
+                <!--</option>-->
+              <!--</select>-->
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <!--</div>-->
+      <!--</div>-->
     </form>
     <div class="form-row">
       <button class="btn btn-primary" [disabled]="!filmForm.valid" type="submit">Save</button>
@@ -62,6 +69,5 @@
       <button class="btn btn-secondary" (click)="onEditCancel()">Cancel</button>
     </div>
     <p>Form status: {{filmForm.status | json}}</p>
-
   </form>
 </div>

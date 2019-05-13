@@ -44,6 +44,7 @@ export class FilmDetailComponent implements OnInit {
   }
 
   getSavedNotification(evt) {
+    console.log(evt);
     this.toggleEdit = !evt;
   }
 

@@ -27,7 +27,8 @@ export class FilmCreateComponent implements OnInit {
 
   options: String[] = [ 'ACTOR', 'DIRECTOR', 'MUSICIAN', 'WRITER' ];
 
-  roleValue: String;
+  roleValue: any;
+  personExistsOnFilm = false;
 
   constructor(private filmService: FilmService,
               private personService: PersonService,
@@ -71,7 +72,12 @@ export class FilmCreateComponent implements OnInit {
 
     this.peopleToAdd = new FormGroup( {
       'people': new FormArray( [] ),
-      'person': new FormControl( null )
+      'person': new FormControl( null ),
+      'test': new FormGroup( {
+          'person': new FormControl( null ),
+          'role': new FormControl( null )
+        }
+      )
     } );
   }
 
@@ -102,12 +108,6 @@ export class FilmCreateComponent implements OnInit {
 
   resetForm() {
     this.createForm();
-  }
-
-  onAddActor() {
-    // this.filmForm.addControl('person', new FormControl(null));
-
-    // (<FormArray>this.peopleToAdd.get('people')).push( new FormControl( null ) );
   }
 
   getPeopleControlls(people: Array<Person>): Array<FormControl> | any {
@@ -142,16 +142,8 @@ export class FilmCreateComponent implements OnInit {
 
       people.subscribe(
         (persons: Person[]) => {
-          // this.found = persons
-          if (this.film.peopleList != null && this.film.peopleList.length > 0) {
-            this.found = this.film.peopleList.filter( function (person) {
-              return !persons.find( function (subscribePerson) {
-                return subscribePerson.id === person.id;
-              } );
-            } );
-          } else {
-            this.found = persons;
-          }
+          persons.forEach( e => e.role = this.options );
+          this.found = persons;
         },
         (error) => console.log( 'error: ' + error )
       );
@@ -159,14 +151,20 @@ export class FilmCreateComponent implements OnInit {
   }
 
   onAddPerson(person: Person, role: String) {
-    console.log( role );
-    if (this.film.peopleList.indexOf( person ) === -1) {
-      this.film.peopleList.push( person );
-
-      ( <FormArray>this.filmForm.get( 'peopleList' )).push( new FormControl( this.film.peopleList.lastIndexOf( person ) ) );
+    const exist = this.film.peopleList.find( function (element) {
+      return element.id === person.id;
+    } );
+    if (!exist) {
+      this.film.peopleList.forEach( p => {
+        if (p.id !== person.id) {
+          this.film.peopleList.push( person );
+        }
+      } );
     }
-    console.log( person );
-    console.log( this.roleValue );
+  }
+
+  onSelectRole(string: String) {
+    console.log( string );
   }
 
   onchange(person: Person, $event) {

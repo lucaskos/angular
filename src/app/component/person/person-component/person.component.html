@@ -1,10 +1,7 @@
-<p>
-  person-component works!
-</p>
-<div>
-  <ul class="people">
-    <li *ngFor="let person of people">
-      <a class="person-item" routerLink="/person/{{person.id}}">
+<div class="container">
+  <ul class="list-group">
+    <li *ngFor="let person of people" class="list-group-item">
+      <a class="list-group-item list-group-item-action" routerLink="/person/{{person.id}}">
         <span>{{person.firstName}}</span>
         <span>{{person.lastName}}</span>
       </a>
