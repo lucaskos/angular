@@ -88,6 +88,7 @@ export class FilmCreateComponent implements OnInit {
           this.filmForm.get( 'title' ).value,
           this.filmForm.get( 'year' ).value,
           this.filmForm.get( 'description' ).value,
+          null,
           null );
       } else {
         this.film.title = this.filmForm.get( 'title' ).value;

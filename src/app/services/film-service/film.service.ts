@@ -24,7 +24,7 @@ export class FilmService {
 
   /** GET film by id */
   getFilm(id: number): Observable<Film> {
-    const url = `${this.filmUrl}film/${id}`;
+    const url = `${this.filmUrl}${id}`;
     return this.http.get<Film>( url, httpOptions );
   }
 

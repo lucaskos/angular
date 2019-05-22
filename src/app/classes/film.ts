@@ -6,6 +6,7 @@ export class Film {
               public title: string,
               public year: number,
               public description: string,
-              public peopleList: Person[]) {
+              public peopleList: Person[],
+              public filmCommentsList: Comment[]) {
   }
 }

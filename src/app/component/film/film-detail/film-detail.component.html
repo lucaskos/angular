@@ -1,7 +1,8 @@
 <div class="container">
-  <div class="jumbotron filmDetail">
-    <div *ngIf="film">
-      <h1>{{ film.title | uppercase }} Details</h1>
+
+  <div *ngIf="film">
+    <div class="jumbotron filmDetail">
+      <h1>{{ film.title | uppercase }}</h1>
       <div>
         <p>{{film.year}}</p>
         <p>{{film.description}}</p>
@@ -18,20 +19,31 @@
           </ul>
         </div>
       </div>
+      <div class="col-12 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
+        <button
+          type="button"
+          class="btn btn-sm btn-primary float-left"
+          (click)="loadFilmToEdit()">
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger float-right"
+          (click)="deleteFilm(film.filmId)">
+          Delete
+        </button>
+      </div>
     </div>
-    <div class="col-12 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
-      <button
-        type="button"
-        class="btn btn-sm btn-primary float-left"
-        (click)="loadFilmToEdit()">
-        Edit
-      </button>
-      <button
-        type="button"
-        class="btn btn-sm btn-danger float-right"
-        (click)="deleteFilm(film.filmId)">
-        Delete
-      </button>
+    <div class="card" *ngIf="film.filmCommentsList.length > 0">
+      <h4>Comments for {{film.title}}</h4>
+      <div *ngFor="let comment of film.filmCommentsList">
+        <h5><b>{{comment.title}}</b></h5>
+        <div>
+          <span>user - {{comment.userId}} | stworzony: </span>
+        </div>
+        <span>{{comment.text}}</span>
+        <hr/>
+      </div>
     </div>
   </div>
   <div *ngIf="toggleEdit">
