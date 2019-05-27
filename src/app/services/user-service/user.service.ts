@@ -19,7 +19,7 @@ const httpOptions = {
 export class UserService {
   private mainUrl = environment.baseUrl;
   private checkEmail = 'user/register/checkEmail/';
-  private generateTokenUrl = 'token/generate-token';
+  private generateTokenUrl = 'user/signin';
   private tokenName = 'Authorization';
   private user: User;
   private roleToken = 'ROLES';
@@ -57,13 +57,12 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem( this.tokenName );
-
+    const token = this.tokenStorage.getToken();
     if (token != null) {
       return true;
+    } else {
+      return false;
     }
-
-    return false;
   }
 
   isAdmin(): boolean {

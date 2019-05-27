@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export class Comment {
   constructor(public id: number,
               public entityId: number,
@@ -5,5 +7,5 @@ export class Comment {
               public parentCommentId: number,
               public title: string,
               public text: string,
-              public userId: number) {}
+              public userId: User) {}
 }

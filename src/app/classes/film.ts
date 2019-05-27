@@ -1,4 +1,5 @@
 import {Person} from './person';
+import {Comment} from './comment';
 
 export class Film {
 

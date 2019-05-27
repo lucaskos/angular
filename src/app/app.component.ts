@@ -23,12 +23,7 @@ export class AppComponent {
   }
 
   get authenticated() {
-    const login = this.tokenStorage.getToken();
-    if (login != null) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.userService.isAuthenticated();
   }
 
   doLogout() {

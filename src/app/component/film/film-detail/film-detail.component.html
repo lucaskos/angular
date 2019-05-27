@@ -39,9 +39,16 @@
       <div *ngFor="let comment of film.filmCommentsList">
         <h5><b>{{comment.title}}</b></h5>
         <div>
-          <span>user - {{comment.userId}} | stworzony: </span>
+          <span>user - {{comment.userId.username}} | stworzony: </span>
         </div>
         <span>{{comment.text}}</span>
+        <div *ngIf="isAuthenticated">
+          <span onclick="this.showCommentBox(comment)">reply</span>
+          <div>
+          <textarea class="comment-{{comment.id}}"></textarea>
+            <button>submit</button>
+          </div>
+        </div>
         <hr/>
       </div>
     </div>
