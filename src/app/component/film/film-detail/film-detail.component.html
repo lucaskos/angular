@@ -43,18 +43,18 @@
         </div>
         <span>{{comment.text}}</span>
         <div *ngIf="isAuthenticated">
-          <span onclick="this.showCommentBox(comment)">reply</span>
+          <span (click)="showCommentBox(comment)">reply</span>
           <div>
-          <textarea class="comment-{{comment.id}}"></textarea>
-            <button>submit</button>
-          </div>
+            <textarea class=" comment-{{comment.id}}"></textarea>
+          <button>submit</button>
         </div>
-        <hr/>
       </div>
+      <hr/>
     </div>
   </div>
-  <div *ngIf="toggleEdit">
-    <app-film-edit (notifyOfSavedCompletted)="getSavedNotification($event)" [film]="film"></app-film-edit>
-  </div>
+</div>
+<div *ngIf="toggleEdit">
+  <app-film-edit (notifyOfSavedCompletted)="getSavedNotification($event)" [film]="film"></app-film-edit>
+</div>
 
 </div>
