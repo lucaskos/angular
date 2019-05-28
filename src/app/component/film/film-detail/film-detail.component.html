@@ -1,0 +1,60 @@
+<div class="container">
+
+  <div *ngIf="film">
+    <div class="jumbotron filmDetail">
+      <h1>{{ film.title | uppercase }}</h1>
+      <div>
+        <p>{{film.year}}</p>
+        <p>{{film.description}}</p>
+        <div class="people-list"></div>
+        <hr/>
+        <div class="container">
+          <ul class="list-group">
+            <li
+              *ngFor="let person of film.peopleList"
+              class="list-group-item list-group-item-primary"
+            >
+              {{ person.firstName }} <strong>{{ person.lastName }}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
+        <button
+          type="button"
+          class="btn btn-sm btn-primary float-left"
+          (click)="loadFilmToEdit()">
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger float-right"
+          (click)="deleteFilm(film.filmId)">
+          Delete
+        </button>
+      </div>
+    </div>
+    <div class="card" *ngIf="film.filmCommentsList.length > 0">
+      <h4>Comments for {{film.title}}</h4>
+      <div *ngFor="let comment of film.filmCommentsList">
+        <h5><b>{{comment.title}}</b></h5>
+        <div>
+          <span>user - {{comment.userId.username}} | stworzony: </span>
+        </div>
+        <span>{{comment.text}}</span>
+        <div *ngIf="isAuthenticated">
+          <span onclick="this.showCommentBox(comment)">reply</span>
+          <div>
+          <textarea class="comment-{{comment.id}}"></textarea>
+            <button>submit</button>
+          </div>
+        </div>
+        <hr/>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="toggleEdit">
+    <app-film-edit (notifyOfSavedCompletted)="getSavedNotification($event)" [film]="film"></app-film-edit>
+  </div>
+
+</div>

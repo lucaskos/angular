@@ -1,47 +1,64 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Film } from './../../film';
+import { Film } from '../../classes/film';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
 };
 
 
 @Injectable()
 export class FilmService {
   films: Observable<Film[]>;
-  film: Observable<Film>;
-  newFilms: Film[] = [];
-  filmUrl = 'http://localhost:8080/filmdb/film';
+  film: Film;
+  filmUrl = environment.baseUrl + 'film/';
 
   constructor(private http: HttpClient) {
   }
 
   getFilms(): Observable<Film[]> {
-    return this.http.get<Film[]>(this.filmUrl, httpOptions);
+    return this.http.get<Film[]>( this.filmUrl + 'list', httpOptions );
   }
 
-  test(): string {
-    return 'test1';
-  }
   /** GET film by id */
   getFilm(id: number): Observable<Film> {
-    const url = `${this.filmUrl}/${id}`;
-    this.film = this.http.get<Film>(url, httpOptions);
-    if (this.film != null) {
-      this.film.subscribe(res => console.log(res));
-    }
-    // Todo: send the message _after_ fetching the hero
-    return this.http.get<Film>(url, httpOptions);
-    // return of(FILMS.find(film => film.filmId === id));
+    const url = `${this.filmUrl}${id}`;
+    return this.http.get<Film>( url, httpOptions );
   }
 
-  saveFilm(film: Film): Observable<Number> {
-    console.log(film);
-    return null;
-    // return this.http.post<Number>(this.filmUrl, httpOptions);
+  saveFilm(film: Film): Observable<Film> {
+    if (film.filmId) {
+      return this.http.put<Film>( this.filmUrl + film.filmId, film, httpOptions );
+    } else {
+      return this.http.post<Film>( this.filmUrl + 'add', film, httpOptions );
+    }
+
+  }
+
+  updateFilm() {
+    console.log( this.film );
+  }
+
+  delete(film: Film): Observable<{}> {
+    return this.http.delete( this.filmUrl + film.filmId, httpOptions );
+  }
+
+  private extractData(response: Response) {
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error( 'Bad response status: ' + response.status );
+    }
+    const body = response.json(); // parse JSON string into JavaScript objects
+
+    return body || {};
+  }
+
+  private handleError(error: any) {
+    // In a real world app, we might send the error to remote logging infrastructure before returning/sending the error
+    const errMsg = error.message || 'Server error'; // transform the error into a user-friendly message
+
+    return Observable.throw( errMsg ); // returns the message in a new, failed observable
   }
 
 }

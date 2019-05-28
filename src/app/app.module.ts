@@ -1,36 +1,42 @@
 import { TokenInterceptor } from './token.interceptor';
-import { AuthenticationService } from './services/authentication.service';
-import { LoginComponent } from './login/login.component';
-import { FilmCreateComponent } from './film-detail/film-edit.component';
-import { RouterModule } from '@angular/router';
+import { UserService } from './services/user-service/user.service';
+import { LoginComponent } from './component/user/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { FilmItemComponent } from './film-item/film-item.component';
 import { FilmService } from './services/film-service/film.service';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { FilmDetailComponent } from './film-detail/film-detail.component';
-import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './router/app-routing.module';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './component/user/register/register.component';
+import { PersonComponent } from './component/person/person-component/person.component';
+import { PersonService } from './services/person-service/person.service';
+import { PersonDetailComponent } from './component/person/person-detail/person-detail.component';
+import { TokenStorage } from './token-storage';
+import { TestComponentComponent } from './component/test-component/test-component.component';
+import { FilmsModule } from './component/film/films.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    FilmItemComponent,
-    FilmDetailComponent,
     DashboardComponent,
-    FilmCreateComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    PersonComponent,
+    PersonDetailComponent,
+    TestComponentComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    FilmsModule
   ],
-  providers: [FilmService, AuthenticationService,
+  providers: [FilmService, PersonService, UserService, TokenStorage,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
@@ -38,4 +44,5 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -4,11 +4,30 @@
     Welcome to {{ title }}!
   </h1>
 </div>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/films">Films</a>
-  <a routerLink="/films/new">Add new film</a>
-  <a routerLink="/login">Login</a>
+<nav >
+  <div class="container-fluid">
+    <ul class="nav nav-pills">
+      <li role="presentation">
+        <a routerLink="/dashboard">Dashboard</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" routerLink="/films">Films</a>
+      </li>
+      <li role="presentation">
+        <a class="nav-link" routerLink="/person">People</a>
+      </li>
+      <li role="presentation" *ngIf="isAdmin">
+        <a class="nav-link" routerLink="/films/new">Add new film</a>
+      </li>
+      <ul class="nav nav-pills navbar-right">
+        <li role="presentation">
+          <a class="nav-link" *ngIf="!authenticated" routerLink="/login">Login</a>
+          <a class="nav-link" *ngIf="authenticated" href="#" (click)="doLogout()">Logout</a>
+        </li>
+      </ul>
+    </ul>
+  </div>
+  <hr/>
 </nav>
 <router-outlet></router-outlet>
 
