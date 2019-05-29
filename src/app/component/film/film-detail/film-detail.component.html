@@ -1,8 +1,11 @@
 <div class="container">
 
   <div *ngIf="film">
+
     <div class="jumbotron filmDetail">
+
       <h1>{{ film.title | uppercase }}</h1>
+
       <div>
         <p>{{film.year}}</p>
         <p>{{film.description}}</p>
@@ -19,6 +22,7 @@
           </ul>
         </div>
       </div>
+
       <div class="col-12 col-md-4 col-xl-8 py-md-3 pl-md-5 bd-content float-left">
         <button
           type="button"
@@ -33,7 +37,9 @@
           Delete
         </button>
       </div>
+
     </div>
+
     <div class="card" *ngIf="film.filmCommentsList.length > 0">
       <h4>Comments for {{film.title}}</h4>
       <div *ngFor="let comment of film.filmCommentsList">
@@ -42,19 +48,21 @@
           <span>user - {{comment.userId.username}} | stworzony: </span>
         </div>
         <span>{{comment.text}}</span>
+
         <div *ngIf="isAuthenticated">
-          <span (click)="showCommentBox(comment)">reply</span>
-          <div>
-            <textarea class=" comment-{{comment.id}}"></textarea>
-          <button>submit</button>
+          <span (click)="addComentReply(comment.id)">reply</span>
+          <div *ngIf="toggleCommentReply && comment.id == this.commentId">
+            <app-comment [comment]="comment"></app-comment>
+          </div>
         </div>
+
+        <hr/>
       </div>
-      <hr/>
     </div>
+  </div><!-- ngIf=film -->
+
+  <div *ngIf="toggleEdit">
+    <app-film-edit (notifyOfSavedCompletted)="getSavedNotification($event)" [film]="film"></app-film-edit>
   </div>
-</div>
-<div *ngIf="toggleEdit">
-  <app-film-edit (notifyOfSavedCompletted)="getSavedNotification($event)" [film]="film"></app-film-edit>
-</div>
 
 </div>

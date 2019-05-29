@@ -1,0 +1,14 @@
+<div>
+  <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+
+      <label for="title" class="center-block">Title:</label>
+      <input id="title" class="form-control" formControlName="title" required>
+
+      <label for="comment" class="center-block">Title:</label>
+      <textarea id="comment" class="form-control" formControlName="text"></textarea>
+
+      <button class="btn btn-primary" [disabled]="!commentForm.valid">Comment</button>
+    </div>
+  </form>
+</div>

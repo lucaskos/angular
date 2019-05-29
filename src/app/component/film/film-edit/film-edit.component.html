@@ -1,5 +1,7 @@
 <div class="container">
+
   <form *ngIf="!isLoaded" [formGroup]="filmForm" (ngSubmit)="onSubmit()">
+
     <div class="form-group">
       <label for="title" class="center-block">Title:</label>
       <input id="title" class="form-control" formControlName="title" required>
@@ -14,16 +16,19 @@
                     </span>
       </div>
     </div>
+
     <div class="form-group">
       <label class="center-block">Year:
         <input class="form-control" formControlName="year">
       </label>
     </div>
+
     <div class="form-group">
       <label class="center-block">Description:
         <input class="form-control" formControlName="description">
       </label>
     </div>
+
     <div class="form-group">
       <div *ngIf="film !== undefined">
         <ul *ngFor="let person of film.peopleList"
@@ -62,12 +67,15 @@
         </div>
       </div>
       <!--</div>-->
-    </form>
+    </form><!-- peopleAdd -->
+
     <div class="form-row">
       <button class="btn btn-primary" [disabled]="!filmForm.valid" type="submit">Save</button>
       <button class="btn btn-danger" (click)="resetForm()">Reset</button>
       <button class="btn btn-secondary" (click)="onEditCancel()">Cancel</button>
     </div>
     <p>Form status: {{filmForm.status | json}}</p>
+
   </form>
+
 </div>

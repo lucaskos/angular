@@ -14,6 +14,8 @@ export class FilmDetailComponent implements OnInit {
   toggleEdit = false;
   id: number;
   isAuthenticated;
+  toggleCommentReply = false;
+  commentId: number;
 
   constructor(private filmService: FilmService,
               private userService: UserService,
@@ -23,8 +25,9 @@ export class FilmDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isAuthenticated = this.userService.isAuthenticated();
-    console.log(this.isAuthenticated);
+
     this.id = +this.route.snapshot.paramMap.get( 'id' );
+
     this.filmService.getFilm( this.id ).subscribe(
       (film: Film) => this.film = film,
       (error) => console.log( 'error: ' + error )
@@ -48,13 +51,22 @@ export class FilmDetailComponent implements OnInit {
     }
   }
 
+  addComentReply(id: number): void {
+    this.commentId = id;
+    if (this.toggleCommentReply) {
+      this.toggleCommentReply = false;
+    } else {
+      this.toggleCommentReply = true;
+    }
+  }
+
   getSavedNotification(evt) {
-    console.log(evt);
+    console.log( evt );
     this.toggleEdit = !evt;
   }
 
   showCommentBox(evt) {
-    console.log(evt);
+    console.log( evt );
 
   }
 
