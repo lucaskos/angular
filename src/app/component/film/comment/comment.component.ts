@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentService } from '../../../services/comment.service';
+import { Comment } from '../../../classes/comment';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-comment',
@@ -11,32 +13,67 @@ export class CommentComponent implements OnInit {
 
   @Input()
   comment: Comment;
-
+  @Input()
+  object: Object;
+  @Input()
+  entityType: string;
   commentForm: FormGroup;
+  commentDepth = 8;
+  savedComment: Comment;
 
-  constructor(private commentService: CommentService) {
+  constructor(private commentService: CommentService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    console.log( this.comment );
+
 
     this.commentForm = new FormGroup( {
       'title': new FormControl( null, [
-        Validators.required,
-        Validators.minLength( 10 )
+        Validators.required
+        // Validators.minLength( 10 )
       ] ),
       'text': new FormControl( null, [
-          Validators.required,
-          Validators.minLength( 10 )
-        ] )
+        Validators.required
+        // Validators.minLength( 10 )
+      ] )
     } );
 
   }
 
   onSubmit() {
+
+    // console.log( this.entityType );
+    // console.log( this.object );
+    // console.log( this.comment );
+
     if (this.comment) {
-      console.log( this.commentForm.get( 'title' ).value );
-      console.log( this.commentForm.get( 'text' ).value );
+
+      var depth = this.comment.depth;
+
+      if (this.comment.depth < this.commentDepth) {
+        depth++;
+      }
+
+      var newComment = new Comment(
+        null,
+        this.comment.entityId,
+        "FILM",
+        depth,
+        this.comment.id,
+        this.commentForm.get( 'title' ).value,
+        this.commentForm.get( 'text' ).value,
+        this.comment.userId );
+
+      this.commentService.addComment( newComment ).subscribe(
+        comment => {
+          this.comment = comment;
+          this.router.navigate([ 'films/', this.comment.entityId ] );
+        },
+        error => {
+          console.log( error );
+        }
+      );
     }
   }
 

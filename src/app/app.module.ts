@@ -16,6 +16,7 @@ import { PersonDetailComponent } from './component/person/person-detail/person-d
 import { TokenStorage } from './token-storage';
 import { TestComponentComponent } from './component/test-component/test-component.component';
 import { FilmsModule } from './component/film/films.module';
+import { CommentService } from './services/comment.service';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { FilmsModule } from './component/film/films.module';
     HttpClientModule,
     FilmsModule
   ],
-  providers: [FilmService, PersonService, UserService, TokenStorage,
+  providers: [FilmService, PersonService, UserService, TokenStorage, CommentService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

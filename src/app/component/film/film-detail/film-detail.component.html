@@ -52,7 +52,7 @@
         <div *ngIf="isAuthenticated">
           <span (click)="addComentReply(comment.id)">reply</span>
           <div *ngIf="toggleCommentReply && comment.id == this.commentId">
-            <app-comment [comment]="comment"></app-comment>
+            <app-comment [comment]="comment" [object]="film" [entityType]="'FILM'"></app-comment>
           </div>
         </div>
 

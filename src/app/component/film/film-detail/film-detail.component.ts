@@ -29,7 +29,9 @@ export class FilmDetailComponent implements OnInit {
     this.id = +this.route.snapshot.paramMap.get( 'id' );
 
     this.filmService.getFilm( this.id ).subscribe(
-      (film: Film) => this.film = film,
+      (film: Film) => {
+        this.film = film;
+      },
       (error) => console.log( 'error: ' + error )
     );
   }
