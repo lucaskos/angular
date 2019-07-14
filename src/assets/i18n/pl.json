@@ -1,0 +1,30 @@
+{
+    "title": "Witaj w moje apce",
+    "menu": {
+      "dashboard": "Główna",
+      "films": "Filmy",
+      "addFilm": "Dodaj film",
+      "people": "Ludzie",
+      "login": "Zaloguj",
+      "logout": "Wyloguj"
+    },
+    "dashboard": "Najlepsze filmy",
+    "actors": "Aktorzy",
+    "film": {
+      "addNew": "Dodaj nowy",
+      "title": "Tytuł",
+      "year": "Rok",
+      "description": "Opis",
+      "warning": {
+        "nameMissing": "Musisz podać tytuł.",
+        "titleLength": "Tytuł musi mieć co najmniej {{length}} znaków "
+      }
+    },
+    "buttons": {
+      "save": "Zapis",
+      "update": "Uaktualnij",
+      "delete": "Usuń",
+      "reset": "Wyczyść",
+      "cancel": "Anuluj"
+  }
+}

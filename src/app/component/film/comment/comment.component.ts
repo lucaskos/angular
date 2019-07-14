@@ -43,10 +43,6 @@ export class CommentComponent implements OnInit {
 
   onSubmit() {
 
-    // console.log( this.entityType );
-    // console.log( this.object );
-    // console.log( this.comment );
-
     if (this.comment) {
 
       var depth = this.comment.depth;
@@ -55,10 +51,10 @@ export class CommentComponent implements OnInit {
         depth++;
       }
 
-      var newComment = new Comment(
+      const newComment = new Comment(
         null,
         this.comment.entityId,
-        "FILM",
+        'FILM',
         depth,
         this.comment.id,
         this.commentForm.get( 'title' ).value,

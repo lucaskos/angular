@@ -8,7 +8,7 @@ import { FilmService } from './services/film-service/film.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './router/app-routing.module';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './component/user/register/register.component';
 import { PersonComponent } from './component/person/person-component/person.component';
 import { PersonService } from './services/person-service/person.service';
@@ -17,6 +17,9 @@ import { TokenStorage } from './token-storage';
 import { TestComponentComponent } from './component/test-component/test-component.component';
 import { FilmsModule } from './component/film/films.module';
 import { CommentService } from './services/comment.service';
+
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 @NgModule({
@@ -30,7 +33,16 @@ import { CommentService } from './services/comment.service';
     TestComponentComponent
   ],
   imports: [
+    // ngx-translate and the loader module
     BrowserModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -46,4 +58,8 @@ import { CommentService } from './services/comment.service';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

@@ -6,13 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FilmCreateComponent } from './film-edit/film-edit.component';
 import { FilmRoutingModule } from './film-routing';
 import { CommentComponent } from './comment/comment.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [FilmDetailComponent, FilmItemComponent, FilmDetailComponent, FilmCreateComponent, CommentComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    FilmRoutingModule
+    FilmRoutingModule,
+    TranslateModule
   ]
 })
 export class FilmsModule { }

@@ -1,31 +1,33 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+  <h1 translate>title</h1>
 </div>
-<nav >
+<nav>
   <div class="container-fluid">
     <ul class="nav nav-pills">
       <li role="presentation">
-        <a routerLink="/dashboard">Dashboard</a>
+        <a routerLink="/dashboard" translate>menu.dashboard</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" routerLink="/films">Films</a>
+        <a class="nav-link" routerLink="/films" translate>menu.films</a>
       </li>
       <li role="presentation">
-        <a class="nav-link" routerLink="/person">People</a>
+        <a class="nav-link" routerLink="/person" translate>menu.people</a>
       </li>
       <li role="presentation" *ngIf="isAdmin">
-        <a class="nav-link" routerLink="/films/new">Add new film</a>
+        <a class="nav-link" routerLink="/films/new" translate>menu.addFilm</a>
       </li>
       <ul class="nav nav-pills navbar-right">
         <li role="presentation">
-          <a class="nav-link" *ngIf="!authenticated" routerLink="/login">Login</a>
-          <a class="nav-link" *ngIf="authenticated" href="#" (click)="doLogout()">Logout</a>
+          <a class="nav-link" *ngIf="!authenticated" routerLink="/login" translate>menu.login</a>
+          <a class="nav-link" *ngIf="authenticated" href="#" (click)="doLogout()" translate>menu.logout</a>
         </li>
       </ul>
     </ul>
+  </div>
+  <div>
+    <button (click)="useLanguage('en')">en</button>
+    <button (click)="useLanguage('pl')">de</button>
   </div>
   <hr/>
 </nav>

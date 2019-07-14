@@ -1,6 +1,7 @@
 import { UserService } from './services/user-service/user.service';
 import { Component } from '@angular/core';
 import {TokenStorage} from './token-storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,10 @@ export class AppComponent {
   private isAdmin = false;
 
   constructor(private userService: UserService,
-              private tokenStorage: TokenStorage) {
+              private tokenStorage: TokenStorage,
+              private translate: TranslateService) {
     this.isAdmin = userService.isAdmin();
+    translate.setDefaultLang('en');
   }
 
   get authenticated() {
@@ -29,5 +32,9 @@ export class AppComponent {
   doLogout() {
     console.log('logout');
     this.userService.logout();
+  }
+
+  useLanguage(language: string) {
+    this.translate.use(language);
   }
 }

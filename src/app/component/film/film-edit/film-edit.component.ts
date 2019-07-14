@@ -5,6 +5,7 @@ import { FilmService } from '../../../services/film-service/film.service';
 import { Person } from '../../../classes/person';
 import { PersonService } from '../../../services/person-service/person.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'app-film-edit',
@@ -32,7 +33,8 @@ export class FilmCreateComponent implements OnInit {
 
   constructor(private filmService: FilmService,
               private personService: PersonService,
-              private router: Router) {
+              private router: Router,
+              public translate: TranslateService) {
 
     this.createForm();
 
