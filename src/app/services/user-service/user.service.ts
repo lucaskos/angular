@@ -2,14 +2,10 @@ import { User } from '../../user';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
 import { TokenStorage } from '../../token-storage';
-import { Token } from '../../../../Token';
 import { environment } from '../../../environments/environment';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -17,28 +13,37 @@ const httpOptions = {
 
 @Injectable()
 export class UserService {
+  public currentUser: Observable<User>;
   private mainUrl = environment.baseUrl;
   private checkEmail = 'user/register/checkEmail/';
   private generateTokenUrl = 'user/signin';
   private tokenName = 'Authorization';
   private user: User;
   private roleToken = 'ROLES';
-  private isEmailExist: Observable<boolean>;
+  private currentUserSubject: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {
+  constructor(private http: HttpClient,
+              private tokenStorage: TokenStorage) {
+    this.currentUserSubject = new BehaviorSubject<User>( JSON.parse( localStorage.getItem( 'currentUser' ) ) );
+    this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  login(username: string, password: string): Observable<Token> {
-    const credentials = {username: username, password: password};
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
 
-    const observable = this.http.post( this.mainUrl + this.generateTokenUrl, credentials, httpOptions ).pipe(
-      catchError( val => of( val ) )
-    );
-    return observable;
+  login(username, password) {
+    return this.http.post<any>( this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions )
+      .pipe( map( user => {
+        localStorage.setItem( 'currentUser', JSON.stringify( user ) );
+        this.currentUserSubject.next( user );
+        return user;
+      } ) );
   }
 
   logout() {
-    this.tokenStorage.signOut();
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
   register(user: User) {
@@ -57,7 +62,7 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.tokenStorage.getToken();
+    const token = localStorage.getItem('currentUser')
     if (token != null) {
       return true;
     } else {
@@ -86,7 +91,7 @@ export class UserService {
   }
 
   isPremium(): boolean {
-    let isPremium = false;
+    const isPremium = false;
     const user = this.getUserToken();
     const roles = this.getUserRoles();
 

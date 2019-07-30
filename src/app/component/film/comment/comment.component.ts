@@ -27,6 +27,8 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log(this.router);
+
 
     this.commentForm = new FormGroup( {
       'title': new FormControl( null, [

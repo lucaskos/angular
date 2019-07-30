@@ -1,6 +1,9 @@
 export class User {
-  constructor(public username: String,
-              public userId: number,
-              public email: String) {
+  constructor(username: String,
+              userId: number,
+              email: String,
+              firstName: String,
+              lastName: String,
+              token: String) {
   }
 }

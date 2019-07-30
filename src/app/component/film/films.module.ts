@@ -15,7 +15,7 @@ import { CommentItemComponent } from './comment-item/comment-item.component';
     ReactiveFormsModule,
     CommonModule,
     FilmRoutingModule,
-    TranslateModule
+    TranslateModule,
   ]
 })
 export class FilmsModule { }

@@ -2,6 +2,9 @@ import { UserService } from '../../../services/user-service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorage } from '../../../token-storage';
+import { AlertService } from '../../../services/alert-service/alert-service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/internal/operators';
 
 @Component( {
   selector: 'app-login',
@@ -9,33 +12,51 @@ import { TokenStorage } from '../../../token-storage';
   styleUrls: [ './login.component.css' ]
 } )
 export class LoginComponent implements OnInit {
-  model: any = {};
   loading = false;
   error = '';
+  submitted = false;
+  loginForm: FormGroup;
 
-  constructor(private router: Router,
+  constructor(private formBuilder: FormBuilder,
+              private router: Router,
               private userService: UserService,
-              private token: TokenStorage) {
+              private token: TokenStorage,
+              private alertService: AlertService) {
+  }
+
+  get f() {
+    return this.loginForm.controls;
   }
 
   ngOnInit() {
-    // reset login status
+    this.loginForm = this.formBuilder.group( {
+      username: [ '', Validators.required ],
+      password: [ '', Validators.required ]
+    } );
   }
 
-  login() {
-    console.log( 'logging' );
+  onSubmit() {
+    this.submitted = true;
+
+    this.alertService.clear();
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.loading = true;
-    this.userService.login( this.model.username, this.model.password )
+
+    this.userService.login( this.f['username'].value, this.f['password'].value )
+      .pipe(first())
       .subscribe(
         data => {
-          console.log( 'data : ' + data );
-          this.token.saveToken( data.token ); //todo cast to object
-          this.router.navigate( [ '/dashboard' ] );
+          this.router.navigate(['/']);
         },
-        (error => {
-          console.log( error );
-        })
-      );
-
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
   }
+
+
 }

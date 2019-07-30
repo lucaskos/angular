@@ -6,6 +6,8 @@ import { Person } from '../../../classes/person';
 import { PersonService } from '../../../services/person-service/person.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
+import { first } from 'rxjs/internal/operators';
 
 @Component( {
   selector: 'app-film-edit',
@@ -97,9 +99,10 @@ export class FilmCreateComponent implements OnInit {
         this.film.description = this.filmForm.get( 'description' ).value;
         this.film.year = this.filmForm.get( 'year' ).value;
       }
-      this.filmService.saveFilm( this.film ).map( res => {
-        return res;
-      } ).subscribe( data => {
+      this.filmService.saveFilm( this.film )
+        .pipe(res => {
+          return res;
+        } ).subscribe( data => {
         this.isLoaded = true;
         this.film = data;
         this.filmUpdatedSuccessfully( true );

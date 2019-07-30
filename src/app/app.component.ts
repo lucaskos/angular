@@ -2,6 +2,7 @@ import { UserService } from './services/user-service/user.service';
 import { Component } from '@angular/core';
 import {TokenStorage} from './token-storage';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
 
   constructor(private userService: UserService,
               private tokenStorage: TokenStorage,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private router: Router) {
     this.isAdmin = userService.isAdmin();
     translate.setDefaultLang('en');
   }
@@ -32,6 +34,7 @@ export class AppComponent {
   doLogout() {
     console.log('logout');
     this.userService.logout();
+    this.router.navigate(['/login']);
   }
 
   useLanguage(language: string) {

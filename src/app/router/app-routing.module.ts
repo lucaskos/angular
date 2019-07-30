@@ -9,14 +9,17 @@ import { FilmDetailComponent } from '../component/film/film-detail/film-detail.c
 import { PersonComponent } from '../component/person/person-component/person.component';
 import { PersonDetailComponent } from '../component/person/person-detail/person-detail.component';
 import { TestComponentComponent } from '../component/test-component/test-component.component';
+import { CommentComponent } from '../component/film/comment/comment.component';
+import { AuthGuard } from '../utils/AuthGuard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'person', component: PersonComponent},
-  {path: 'person/:id', component: PersonDetailComponent}
+  {path: 'person/:id', component: PersonDetailComponent},
+  {path: 'comments/detail/:id', component: CommentComponent}
 ];
 
 @NgModule( {

@@ -15,7 +15,7 @@ export class FilmItemComponent implements OnInit {
   filmDetail: Film;
   collection: Observable<Film[]>;
 
-  constructor(private filmservice: FilmService,
+  constructor(private filmService: FilmService,
               private router: Router) {
 
   }
@@ -26,8 +26,8 @@ export class FilmItemComponent implements OnInit {
   }
 
   getFilms(): void {
-    this.collection = this.filmservice.getFilms();
-    this.filmservice.getFilms()
+    this.collection = this.filmService.getFilms();
+    this.filmService.getFilms()
       .subscribe(film => this.films = film);
   }
 
