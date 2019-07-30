@@ -3,8 +3,8 @@ import { UserService } from '../../../services/user-service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { TokenStorage } from '../../../token-storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import { User } from '../../../user';
+import { AlertService } from '../../../services/alert-service/alert-service';
 
 @Component( {
   selector: 'app-register',
@@ -14,10 +14,12 @@ import { User } from '../../../user';
 export class RegisterComponent implements OnInit {
   loading = false;
   registerForm: FormGroup;
+  submitted = false;
 
   constructor(private userService: UserService,
               private router: Router,
-              private tokenStorage: TokenStorage) {
+              private tokenStorage: TokenStorage,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -34,16 +36,26 @@ export class RegisterComponent implements OnInit {
     // reset login status
   }
 
-  register() {
+  onSubmit() {
     console.log( this.registerForm )
+
+    this.alertService.clear();
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
     this.loading = true;
+
     if (!this.tokenStorage.getToken() && this.registerForm.valid) {
       this.userService.register( this.formToUserData( this.registerForm ) )
         .subscribe(
           data => {
+            this.alertService.succes('Registration succesful', true);
             this.router.navigate( [ 'login' ] );
           },
           error => {
+            this.alertService.error(error);
             this.loading = false;
           },
           () => {
@@ -51,7 +63,7 @@ export class RegisterComponent implements OnInit {
           });
     } else {
       console.log( 'cannot create user form invalid' );
-      alert('Error  in form.')
+      alert('Error  in form.');
     }
   }
 

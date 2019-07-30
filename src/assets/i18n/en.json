@@ -1,30 +1,44 @@
 {
-    "title": "Welcome to my app!",
-    "menu": {
-      "dashboard": "Main",
-      "films": "Films",
-      "addFilm": "Add new film",
-      "people": "People",
-      "login": "Login",
-      "logout": "Logout"
-    },
-    "dashboard": "Top Films",
-    "actors": "Actors",
-    "film": {
-      "addNew": "Add new",
-      "title": "Title",
-      "year": "Year",
-      "description": "Description",
-      "warning": {
-        "nameMissing": "Name is required.",
-        "titleLength": "Minimal title lenght is {{length}} "
-      }
-    },
-    "buttons": {
-      "save": "Save",
-      "update": "Update",
-      "delete": "Delete",
-      "reset": "Reset",
-      "cancel": "Cancel"
+  "title": "Welcome to my app!",
+  "menu": {
+    "dashboard": "Main",
+    "films": "Films",
+    "addFilm": "Add new film",
+    "people": "People",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "dashboard": "Top Films",
+  "actors": "Actors",
+  "film": {
+    "addNew": "Add new",
+    "title": "Title",
+    "year": "Year",
+    "description": "Description",
+    "warning": {
+      "nameMissing": "Name is required.",
+      "titleLength": "Minimal title lenght is {{length}} "
+    }
+  },
+  "buttons": {
+    "save": "Save",
+    "update": "Update",
+    "delete": "Delete",
+    "reset": "Reset",
+    "cancel": "Cancel",
+    "register": "Register",
+    "login": "Login"
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password"
+  },
+  "register": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "repassword": "Retype password",
+    "email": "Email",
+    "username": "Username"
   }
 }

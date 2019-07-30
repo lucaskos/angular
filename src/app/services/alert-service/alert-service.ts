@@ -14,4 +14,9 @@ export class AlertService {
   error(error: any) {
     console.log(error);
   }
+
+  succes(s: string, b: boolean) {
+    console.log(s);
+    console.log(b);
+  }
 }
