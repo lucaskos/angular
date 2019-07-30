@@ -1,22 +1,43 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
+import { NavigationStart, Router } from '@angular/router';
 
 @Injectable()
 export class AlertService {
+  private subject = new Subject<any>();
+  private keepAfterRouteChange = false;
 
-
-  constructor() {
+  constructor(private router: Router) {
+    // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        if (this.keepAfterRouteChange) {
+          // only keep for a single route change
+          this.keepAfterRouteChange = false;
+        } else {
+          // clear alert message
+          this.clear();
+        }
+      }
+    });
   }
 
   clear() {
-
+    this.subject.next();
   }
 
-  error(error: any) {
-    console.log(error);
+  getAlert(): Observable<any> {
+    return this.subject.asObservable();
   }
 
-  succes(s: string, b: boolean) {
-    console.log(s);
-    console.log(b);
+
+  error(message: string, keepAfterRouteChange = false) {
+    this.keepAfterRouteChange = keepAfterRouteChange;
+    this.subject.next({ type: 'error', text: message });
+  }
+
+  success(message: string, keepAfterRouteChange = false) {
+    this.keepAfterRouteChange = keepAfterRouteChange;
+    this.subject.next({ type: 'success', text: message });
   }
 }
