@@ -3,6 +3,10 @@ import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilmService } from '../../../services/film-service/film.service';
 import { UserService } from '../../../services/user-service/user.service';
+import { AlertService } from '../../../services/alert-service/alert-service';
+import { catchError, finalize } from 'rxjs/internal/operators';
+import { subscribeTo } from 'rxjs/internal/util/subscribeTo';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 @Component( {
   selector: 'app-film-detail',
@@ -20,7 +24,8 @@ export class FilmDetailComponent implements OnInit {
   constructor(private filmService: FilmService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -32,16 +37,17 @@ export class FilmDetailComponent implements OnInit {
       (film: Film) => {
         this.film = film;
       },
-      (error) => console.log( 'error: ' + error )
+      (error) => this.alertService.error( error )
     );
   }
 
   deleteFilm() {
-    this.filmService.delete( this.film ).subscribe( () => {
+    const deleted: Subscription  = this.filmService.delete( this.film )
+    .subscribe( () => {
         this.router.navigate( [ 'films/' ] );
       },
       (error => {
-        console.log( error );
+        this.alertService.error( error , true);
       }) );
   }
 

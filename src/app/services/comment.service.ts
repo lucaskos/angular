@@ -12,7 +12,7 @@ const httpOptions = {
 export class CommentService {
   private mainUrl = environment.baseUrl + 'comment';
   private commentPost = '/add';
-  private commentGet = '/detail';
+  private commentGet = '/detail/';
   private commentsGet = '/list';
 
   constructor(private httpClient: HttpClient) {
@@ -35,7 +35,7 @@ export class CommentService {
   getComment(commentId: Number): Observable<Comment> {
     console.log( commentId );
 
-    return this.httpClient.get<Comment>( this.mainUrl + this.commentGet, httpOptions);
+    return this.httpClient.get<Comment>( this.mainUrl + this.commentGet + commentId , httpOptions);
   }
 
 }

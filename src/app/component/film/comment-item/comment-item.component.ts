@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { CommentService } from '../../../services/comment.service';
 import { Film } from '../../../classes/film';
 import { Comment } from '../../../classes/comment';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component( {
   selector: 'app-comment-item',
@@ -13,8 +15,12 @@ export class CommentItemComponent implements OnInit {
   @Input()
   film: Film;
   comments: Comment[];
+  @Output()
+  comment: Comment;
 
-  constructor(private commentService: CommentService) {
+  constructor(private router: Router,
+              private commentService: CommentService,
+              private storageService: StorageService) {
   }
 
   ngOnInit() {
@@ -35,4 +41,8 @@ export class CommentItemComponent implements OnInit {
     console.log( this.comments );
   }
 
+  commentDetails(comment: Comment) {
+    this.storageService.setScope(comment);
+    this.router.navigate(['/comments/detail/' + comment.id])
+  }
 }

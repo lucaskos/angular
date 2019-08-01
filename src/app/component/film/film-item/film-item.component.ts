@@ -26,8 +26,8 @@ export class FilmItemComponent implements OnInit {
   }
 
   getFilms(): void {
-    this.collection = this.filmService.getFilms();
-    this.filmService.getFilms()
+    this.collection = this.filmService.getAllFilms();
+    this.filmService.getAllFilms()
       .subscribe(film => this.films = film);
   }
 

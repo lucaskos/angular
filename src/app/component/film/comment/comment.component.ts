@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { CommentService } from '../../../services/comment.service';
 import { Comment } from '../../../classes/comment';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component( {
   selector: 'app-comment',
@@ -11,68 +11,69 @@ import { Router } from '@angular/router';
 } )
 export class CommentComponent implements OnInit {
 
-  @Input()
+  parentComment: Comment;
   comment: Comment;
-  @Input()
-  object: Object;
-  @Input()
-  entityType: string;
-  commentForm: FormGroup;
-  commentDepth = 8;
-  savedComment: Comment;
+  id: Number;
 
-  constructor(private commentService: CommentService,
-              private router: Router) {
+  constructor(private storageService: StorageService,
+              private commentService: CommentService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.parentComment = <Comment>this.storageService.getScope();
+    this.id = this.parentComment.id;
 
-    console.log(this.router);
+    console.log( this.parentComment );
 
 
-    this.commentForm = new FormGroup( {
-      'title': new FormControl( null, [
-        Validators.required
-        // Validators.minLength( 10 )
-      ] ),
-      'text': new FormControl( null, [
-        Validators.required
-        // Validators.minLength( 10 )
-      ] )
-    } );
+    this.commentService.getComment( this.id )
+      .pipe().subscribe( c => this.comment = c );
+
+
+    // this.commentForm = new FormGroup( {
+    //   'title': new FormControl( null, [
+    //     Validators.required
+    //     // Validators.minLength( 10 )
+    //   ] ),
+    //   'text': new FormControl( null, [
+    //     Validators.required
+    //     // Validators.minLength( 10 )
+    //   ] )
+    // } );
 
   }
 
   onSubmit() {
 
-    if (this.comment) {
-
-      var depth = this.comment.depth;
-
-      if (this.comment.depth < this.commentDepth) {
-        depth++;
-      }
-
-      const newComment = new Comment(
-        null,
-        this.comment.entityId,
-        'FILM',
-        depth,
-        this.comment.id,
-        this.commentForm.get( 'title' ).value,
-        this.commentForm.get( 'text' ).value,
-        this.comment.userId );
-
-      this.commentService.addComment( newComment ).subscribe(
-        comment => {
-          this.comment = comment;
-          this.router.navigate([ 'films/', this.comment.entityId ] );
-        },
-        error => {
-          console.log( error );
-        }
-      );
-    }
+    // if (this.comment) {
+    //
+    //   var depth = this.comment.depth;
+    //
+    //   if (this.comment.depth < this.commentDepth) {
+    //     depth++;
+    //   }
+    //
+    //   const newComment = new Comment(
+    //     null,
+    //     this.comment.entityId,
+    //     'FILM',
+    //     depth,
+    //     this.comment.id,
+    //     this.commentForm.get( 'title' ).value,
+    //     this.commentForm.get( 'text' ).value,
+    //     this.comment.userId );
+    //
+    //   this.commentService.addComment( newComment ).subscribe(
+    //     comment => {
+    //       this.comment = comment;
+    //       this.router.navigate([ 'films/', this.comment.entityId ] );
+    //     },
+    //     error => {
+    //       console.log( error );
+    //     }
+    //   );
+    // }
   }
 
 }

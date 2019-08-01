@@ -4,10 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 
-const httpOptions = {
-  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
-};
-
 
 @Injectable()
 export class FilmService {
@@ -18,31 +14,31 @@ export class FilmService {
   constructor(private http: HttpClient) {
   }
 
-  getFilms(): Observable<Film[]> {
-    return this.http.get<Film[]>( this.filmUrl + 'list', httpOptions );
+  getAllFilms(): Observable<Film[]> {
+    return this.http.get<Film[]>( this.filmUrl + 'list' );
   }
 
   /** GET film by id */
   getFilm(id: number): Observable<Film> {
     const url = `${this.filmUrl}${id}`;
-    return this.http.get<Film>( url, httpOptions );
+    return this.http.get<Film>( url );
+  }
+
+  getByTitle(title: string): Observable<Film[]> {
+    return this.http.get<Film[]>( `${this.filmUrl}${title}` );
   }
 
   saveFilm(film: Film): Observable<Film> {
     if (film.filmId) {
-      return this.http.put<Film>( this.filmUrl + film.filmId, film, httpOptions );
+      return this.http.put<Film>( this.filmUrl, film );
     } else {
-      return this.http.post<Film>( this.filmUrl + 'add', film, httpOptions );
+      return this.http.post<Film>( this.filmUrl + 'add', film );
     }
 
   }
 
-  updateFilm() {
-    console.log( this.film );
-  }
-
   delete(film: Film): Observable<{}> {
-    return this.http.delete( this.filmUrl + film.filmId, httpOptions );
+    return this.http.delete( this.filmUrl + film.filmId );
   }
 
   private extractData(response: Response) {

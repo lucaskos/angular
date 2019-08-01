@@ -21,6 +21,7 @@ import { CommentService } from './services/comment.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AlertService } from './services/alert-service/alert-service';
+import { StorageService } from './services/storage.service';
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import { AlertService } from './services/alert-service/alert-service';
     HttpClientModule,
     FilmsModule
   ],
-  providers: [FilmService, PersonService, UserService, TokenStorage, CommentService, AlertService,
+  providers: [FilmService, PersonService, UserService, TokenStorage, CommentService, AlertService, StorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

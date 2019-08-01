@@ -5,7 +5,7 @@
     <div>
       <a
         class="list-group-item list-group-item-action"
-        [routerLink]="comment.id"
+        (click)="commentDetails(comment)"
       >
         <h5>{{ comment.title }}</h5>
         <p>{{ comment.text }}</p>
