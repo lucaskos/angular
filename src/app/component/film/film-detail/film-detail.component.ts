@@ -17,7 +17,6 @@ export class FilmDetailComponent implements OnInit {
   @Output() film: Film;
   toggleEdit = false;
   id: number;
-  isAuthenticated;
   toggleCommentReply = false;
   commentId: number;
 
@@ -29,8 +28,6 @@ export class FilmDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAuthenticated = this.userService.isAuthenticated();
-
     this.id = +this.route.snapshot.paramMap.get( 'id' );
 
     this.filmService.getFilm( this.id ).subscribe(
@@ -76,6 +73,10 @@ export class FilmDetailComponent implements OnInit {
   showCommentBox(evt) {
     console.log( evt );
 
+  }
+
+  isAuthenticated(): boolean {
+    return this.userService.isAuthenticated();
   }
 
 }

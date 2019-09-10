@@ -21,7 +21,7 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.parentComment = <Comment>this.storageService.getScope();
+    this.parentComment = <any>this.storageService.getScope();
     this.id = this.parentComment.id;
 
     console.log( this.parentComment );

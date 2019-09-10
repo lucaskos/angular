@@ -26,7 +26,7 @@ export class CommentItemComponent implements OnInit {
   ngOnInit() {
     console.log( this.film );
 
-    const comment = new Comment( null, this.film.filmId, "FILM", null, null, null, null, null );
+    const comment = new Comment( null, this.film.filmId, "FILM", null, null, null, null, null, null );
     if (this.film instanceof Film) {
       comment.entityType = 'FILM';
       comment.entityId = this.film.filmId;

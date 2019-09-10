@@ -3,7 +3,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { TokenStorage } from './token-storage';
 import { Router } from '@angular/router';
 import { UserService } from './services/user-service/user.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs/index';
 import { catchError } from 'rxjs/internal/operators';
 

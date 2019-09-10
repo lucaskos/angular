@@ -23,13 +23,12 @@
           <a class="nav-link" *ngIf="authenticated" href="#" (click)="doLogout()" translate>menu.logout</a>
         </li>
       </ul>
+      <div class="nav navbar-right">
+        <button type="button" class="btn btn-info" (click)="useLanguage('en')">en</button>
+        <button type="button" class="btn btn-info" (click)="useLanguage('pl')">pl</button>
+      </div>
     </ul>
   </div>
-  <div>
-    <button (click)="useLanguage('en')">en</button>
-    <button (click)="useLanguage('pl')">de</button>
-  </div>
-  <hr/>
 </nav>
 <router-outlet></router-outlet>
 

@@ -1,3 +1,3 @@
 export const properties = {
-  commentDepth: 8
+  commentDepth: 4
 };

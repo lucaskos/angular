@@ -15,11 +15,18 @@
     <h5>{{ comment.title }}</h5>
     <p>{{ comment.text }}</p>
     <span>{{ comment.userId }}</span>
-    <li *ngFor="let com of comment.subComments">
-      <div *ngIf="com!==undefined" style="margin-left: 20px">
-        <h5>{{ com.title }}</h5>
-        <p>{{ com.text }}</p>
-        <span>{{ com.userId }}</span>
+    <li *ngFor="let subComLevel1 of comment.subComments">
+      <div *ngIf="subComLevel1!==undefined" style="margin-left: 20px">
+        <h5>{{ subComLevel1.title }}</h5>
+        <p>{{ subComLevel1.text }}</p>
+        <span>{{ subComLevel1.userId }}</span>
+        <li *ngFor="let subComLevel2 of subComLevel1.subComments">
+          <div *ngIf="subComLevel2!==undefined" style="margin-left: 40px">
+            <h5>{{ subComLevel2.title }}</h5>
+            <p>{{ subComLevel2.text }}</p>
+            <span>{{ subComLevel2.userId }}</span>
+          </div>
+        </li>
       </div>
     </li>
   </div>

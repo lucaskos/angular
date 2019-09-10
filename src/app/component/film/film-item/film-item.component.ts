@@ -3,6 +3,7 @@ import { Film } from '../../../classes/film';
 import { Component, OnInit } from '@angular/core';
 import {FilmService} from '../../../services/film-service/film.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user-service/user.service';
 
 @Component({
   selector: 'app-film-item',
@@ -16,6 +17,7 @@ export class FilmItemComponent implements OnInit {
   collection: Observable<Film[]>;
 
   constructor(private filmService: FilmService,
+              private userService: UserService,
               private router: Router) {
 
   }
@@ -33,5 +35,9 @@ export class FilmItemComponent implements OnInit {
 
   addNew(): void {
     this.router.navigate(['film/new']);
+  }
+
+  isAuthenticated(): boolean {
+    return this.userService.isAuthenticated();
   }
 }

@@ -6,8 +6,7 @@ import { Person } from '../../../classes/person';
 import { PersonService } from '../../../services/person-service/person.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { map } from 'rxjs/operators';
-import { first } from 'rxjs/internal/operators';
+import { UserService } from '../../../services/user-service/user.service';
 
 @Component( {
   selector: 'app-film-edit',
@@ -36,6 +35,7 @@ export class FilmCreateComponent implements OnInit {
   constructor(private filmService: FilmService,
               private personService: PersonService,
               private router: Router,
+              private userService: UserService,
               public translate: TranslateService) {
 
     this.createForm();
@@ -100,7 +100,7 @@ export class FilmCreateComponent implements OnInit {
         this.film.year = this.filmForm.get( 'year' ).value;
       }
       this.filmService.saveFilm( this.film )
-        .pipe(res => {
+        .pipe( res => {
           return res;
         } ).subscribe( data => {
         this.isLoaded = true;
@@ -176,5 +176,9 @@ export class FilmCreateComponent implements OnInit {
   onchange(person: Person, $event) {
     person.role = $event.toString();
     console.log( person );
+  }
+
+  isAuthenticated(): boolean {
+    return this.userService.isAuthenticated();
   }
 }
