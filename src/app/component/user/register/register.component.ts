@@ -1,10 +1,10 @@
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user-service/user.service';
+import { UserService } from '../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { TokenStorage } from '../../../token-storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../user';
-import { AlertService } from '../../../services/alert-service/alert-service';
+import { AlertService } from '../../../services/alert-service';
 
 @Component( {
   selector: 'app-register',

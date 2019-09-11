@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PersonService} from '../../../services/person-service/person.service';
+import {PersonService} from '../../../services/person.service';
 import {Person} from '../../../classes/person';
 import { Location } from '@angular/common';
 import {Observable} from "rxjs/Observable";

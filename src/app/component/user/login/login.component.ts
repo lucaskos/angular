@@ -1,8 +1,8 @@
-import { UserService } from '../../../services/user-service/user.service';
+import { UserService } from '../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorage } from '../../../token-storage';
-import { AlertService } from '../../../services/alert-service/alert-service';
+import { AlertService } from '../../../services/alert-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/internal/operators';
 

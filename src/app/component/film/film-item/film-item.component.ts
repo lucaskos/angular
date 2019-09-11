@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { Film } from '../../../classes/film';
 import { Component, OnInit } from '@angular/core';
-import {FilmService} from '../../../services/film-service/film.service';
+import {FilmService} from '../../../services/film.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user-service/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-film-item',

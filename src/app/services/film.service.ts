@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Film } from '../../classes/film';
+import { Film } from '../classes/film';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -18,7 +18,6 @@ export class FilmService {
     return this.http.get<Film[]>( this.filmUrl + 'list' );
   }
 
-  /** GET film by id */
   getFilm(id: number): Observable<Film> {
     const url = `${this.filmUrl}${id}`;
     return this.http.get<Film>( url );

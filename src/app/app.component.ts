@@ -1,4 +1,4 @@
-import { UserService } from './services/user-service/user.service';
+import { UserService } from './services/user.service';
 import { Component } from '@angular/core';
 import {TokenStorage} from './token-storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,11 +11,6 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'app';
-  loginLink = '/login';
-  logoutLink = '/logout';
-  loginText = 'Login';
-  logoutText = 'Logout';
-  link: string;
   text: string;
   private isAdmin = false;
 

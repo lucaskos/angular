@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { TokenStorage } from './token-storage';
 import { Router } from '@angular/router';
-import { UserService } from './services/user-service/user.service';
+import { UserService } from './services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs/index';
 import { catchError } from 'rxjs/internal/operators';

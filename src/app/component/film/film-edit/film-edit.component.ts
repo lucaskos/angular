@@ -1,12 +1,12 @@
 import { Film } from '../../../classes/film';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FilmService } from '../../../services/film-service/film.service';
+import { FilmService } from '../../../services/film.service';
 import { Person } from '../../../classes/person';
-import { PersonService } from '../../../services/person-service/person.service';
+import { PersonService } from '../../../services/person.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from '../../../services/user-service/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component( {
   selector: 'app-film-edit',

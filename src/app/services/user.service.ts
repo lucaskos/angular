@@ -1,10 +1,10 @@
-import { User } from '../../user';
+import { User } from '../user';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { TokenStorage } from '../../token-storage';
-import { environment } from '../../../environments/environment';
+import { TokenStorage } from '../token-storage';
+import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 const httpOptions = {

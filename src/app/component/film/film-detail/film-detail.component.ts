@@ -1,9 +1,9 @@
 import { Film } from '../../../classes/film';
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FilmService } from '../../../services/film-service/film.service';
-import { UserService } from '../../../services/user-service/user.service';
-import { AlertService } from '../../../services/alert-service/alert-service';
+import { FilmService } from '../../../services/film.service';
+import { UserService } from '../../../services/user.service';
+import { AlertService } from '../../../services/alert-service';
 import { catchError, finalize } from 'rxjs/internal/operators';
 import { subscribeTo } from 'rxjs/internal/util/subscribeTo';
 import { Observable, Subscription } from 'rxjs/Rx';
