@@ -1,14 +1,15 @@
-import { User } from '../user';
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
-import { TokenStorage } from '../token-storage';
-import { environment } from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {User} from '../user';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {catchError, map} from 'rxjs/operators';
+import {TokenStorage} from '../token-storage';
+import {environment} from '../../environments/environment';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {empty} from "rxjs";
 
 const httpOptions = {
-  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable()
@@ -24,7 +25,7 @@ export class UserService {
 
   constructor(private http: HttpClient,
               private tokenStorage: TokenStorage) {
-    this.currentUserSubject = new BehaviorSubject<User>( JSON.parse( localStorage.getItem( 'currentUser' ) ) );
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -33,12 +34,15 @@ export class UserService {
   }
 
   login(username, password) {
-    return this.http.post<any>( this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions )
-      .pipe( map( user => {
-        localStorage.setItem( 'currentUser', JSON.stringify( user ) );
-        this.currentUserSubject.next( user );
+    return this.http.post<any>(this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions)
+      .pipe(map(user => {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
         return user;
-      } ) );
+      }), catchError((err, caught) => {
+        console.log('Error in log in: ' + err);
+        return null;
+      }));
   }
 
   logout() {
@@ -49,16 +53,16 @@ export class UserService {
   register(user: User) {
     const registerUrl = 'user/register';
 
-    console.log( 'User : ' + JSON.stringify( user ) );
-    return this.http.post( this.mainUrl + registerUrl, user );
+    console.log('User : ' + JSON.stringify(user));
+    return this.http.post(this.mainUrl + registerUrl, user);
   }
 
   getUserToken(): any {
-    return localStorage.getItem( this.roleToken );
+    return localStorage.getItem(this.roleToken);
   }
 
   getUserRoles(): String {
-    return localStorage.getItem( this.roleToken );
+    return localStorage.getItem(this.roleToken);
   }
 
   isAuthenticated(): boolean {
@@ -78,8 +82,8 @@ export class UserService {
     if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
       const userRole = user.Role;
       try {
-        const role = localStorage.getItem( this.roleToken );
-        if (roles.match( 'ROLE_ADMIN' ) !== null) {
+        const role = localStorage.getItem(this.roleToken);
+        if (roles.match('ROLE_ADMIN') !== null) {
           isAdmin = true;
         }
       } catch (error) {
@@ -105,7 +109,7 @@ export class UserService {
 
   isEmailExists(email: string): Observable<boolean> {
     const apiUrl = this.mainUrl + this.checkEmail + email;
-    return this.http.get<boolean>( apiUrl );
+    return this.http.get<boolean>(apiUrl);
     // return this.isEmailExist;
   }
 

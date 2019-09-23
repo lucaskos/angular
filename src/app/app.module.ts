@@ -22,6 +22,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AlertService } from './services/alert-service';
 import { StorageService } from './services/storage.service';
+import {AlertComponent} from "./component/_alert/alert-component";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { StorageService } from './services/storage.service';
     RegisterComponent,
     PersonComponent,
     PersonDetailComponent,
-    TestComponentComponent
+    TestComponentComponent,
+    AlertComponent
   ],
   imports: [
     // ngx-translate and the loader module

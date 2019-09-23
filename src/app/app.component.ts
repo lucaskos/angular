@@ -1,8 +1,9 @@
-import { UserService } from './services/user.service';
-import { Component } from '@angular/core';
+import {UserService} from './services/user.service';
+import {Component} from '@angular/core';
 import {TokenStorage} from './token-storage';
-import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
+import {AlertService} from "./services/alert-service";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent {
   constructor(private userService: UserService,
               private tokenStorage: TokenStorage,
               private translate: TranslateService,
-              private router: Router) {
+              private router: Router,
+              private alertService: AlertService) {
     this.isAdmin = userService.isAdmin();
     translate.setDefaultLang('en');
   }
@@ -34,5 +36,25 @@ export class AppComponent {
 
   useLanguage(language: string) {
     this.translate.use(language);
+  }
+
+  success(message: string) {
+    this.alertService.success(message);
+  }
+
+  error(message: string) {
+    this.alertService.error(message);
+  }
+
+  info(message: string) {
+    this.alertService.info(message);
+  }
+
+  warn(message: string) {
+    this.alertService.warn(message);
+  }
+
+  clear() {
+    this.alertService.clear();
   }
 }
