@@ -44,7 +44,7 @@ export class FilmDetailComponent implements OnInit {
         this.router.navigate( [ 'films/' ] );
       },
       (error => {
-        this.alertService.error( error , true);
+        this.alertService.error('error', error.toString());
       }) );
   }
 

@@ -1,41 +1,41 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Comment } from '../classes/comment';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Comment} from '../classes/comment';
+import {Observable} from 'rxjs/Observable';
 
 const httpOptions = {
-  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable()
 export class CommentService {
-  private mainUrl = environment.baseUrl + 'comment';
-  private commentPost = '/add';
-  private commentGet = '/detail/';
-  private commentsGet = '/list';
+    private mainUrl = environment.baseUrl + 'comment';
+    private commentPost = '/add';
+    private commentGet = '/detail/';
+    private commentsGet = '/list';
 
-  constructor(private httpClient: HttpClient) {
-  }
+    constructor(private httpClient: HttpClient) {
+    }
 
-  addComment(comment: Comment): Observable<Comment>  {
+    addComment(comment: Comment): Observable<Comment> {
 
-    console.log( comment );
+        console.log(comment);
 
-    return this.httpClient.post<Comment>( this.mainUrl + this.commentPost, comment, httpOptions );
+        return this.httpClient.post<Comment>(this.mainUrl + this.commentPost, comment, httpOptions);
 
-  }
+    }
 
-  getAllObjectComments(object: Object): Observable<Comment[]> {
-    console.log(object);
+    getAllObjectComments(object: Object): Observable<Comment[]> {
+        console.log(object);
 
-    return this.httpClient.post<Comment[]>( this.mainUrl + this.commentsGet, object, httpOptions);
-  }
+        return this.httpClient.post<Comment[]>(this.mainUrl + this.commentsGet, object, httpOptions);
+    }
 
-  getComment(commentId: Number): Observable<Comment> {
-    console.log( commentId );
+    getComment(commentId: Number): Observable<Comment> {
+        console.log(commentId);
 
-    return this.httpClient.get<Comment>( this.mainUrl + this.commentGet + commentId , httpOptions);
-  }
+        return this.httpClient.get<Comment>(this.mainUrl + this.commentGet + commentId, httpOptions);
+    }
 
 }

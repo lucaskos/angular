@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
       this.userService.register( this.formToUserData( this.registerForm ) )
         .subscribe(
           data => {
-            this.alertService.success('Registration succesful', true);
+            this.alertService.success('Registration succesful', "success");
             this.router.navigate( [ 'login' ] );
           },
           error => {

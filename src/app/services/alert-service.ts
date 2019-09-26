@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs/Rx';
 import {NavigationStart, Router} from '@angular/router';
-import {Alert, AlertType} from "../component/_alert/alert.model";
+import {Alert, AlertType} from '../component/_alert/alert.model';
 import {filter} from 'rxjs/operators';
 
 @Injectable()
