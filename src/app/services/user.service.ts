@@ -16,7 +16,6 @@ const httpOptions = {
 export class UserService {
     public currentUser: Observable<User>;
     private mainUrl = environment.baseUrl;
-    private checkEmail = 'user/register/checkEmail/';
     private generateTokenUrl = 'user/signin';
     private tokenName = 'Authorization';
     private user: User;
@@ -106,9 +105,8 @@ export class UserService {
     }
 
     isEmailExists(email: string): Observable<boolean> {
-        const apiUrl = this.mainUrl + this.checkEmail + email;
+        const apiUrl = this.mainUrl + `user/register/checkEmail/` + email;
         return this.http.get<boolean>(apiUrl);
-        // return this.isEmailExist;
     }
 
 }

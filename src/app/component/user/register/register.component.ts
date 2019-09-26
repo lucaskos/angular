@@ -14,7 +14,6 @@ import { AlertService } from '../../../services/alert-service';
 export class RegisterComponent implements OnInit {
   loading = false;
   registerForm: FormGroup;
-  submitted = false;
 
   constructor(private userService: UserService,
               private router: Router,
@@ -51,7 +50,7 @@ export class RegisterComponent implements OnInit {
       this.userService.register( this.formToUserData( this.registerForm ) )
         .subscribe(
           data => {
-            this.alertService.success('Registration succesful', "success");
+            this.alertService.success('Registration succesful');
             this.router.navigate( [ 'login' ] );
           },
           error => {
@@ -70,7 +69,12 @@ export class RegisterComponent implements OnInit {
   private isEmailCorrect(control: FormControl): boolean {
     let valid = true;
     this.userService.isEmailExists(control.value).subscribe(
-      value => valid = false
+      value => {
+        valid = false;
+      }, error => {
+        this.alertService.info('Email is taken!');
+        valid = false;
+        }
     );
     return valid;
   }

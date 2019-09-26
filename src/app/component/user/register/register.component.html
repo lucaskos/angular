@@ -1,22 +1,22 @@
 <div class="col-md-6 col-md-offset-3">
-  <h2>Register</h2>
-  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
 
-    <div class="form-group">
-      <label for="firstName"><span translate>register.firstName</span></label>
-      <input type="text" id="firstName" class="form-control" formControlName="firstName">
-    </div>
+        <div class="form-group">
+            <label for="firstName"><span translate>register.firstName</span></label>
+            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        </div>
 
-    <div class="form-group">
-      <label for="lastName"><span translate>register.lastName</span></label>
-      <input type="text" id="lastName" class="form-control" formControlName="lastName">
-    </div>
+        <div class="form-group">
+            <label for="lastName"><span translate>register.lastName</span></label>
+            <input type="text" id="lastName" class="form-control" formControlName="lastName">
+        </div>
 
-    <div class="form-group">
-      <label for="username"><span translate>register.username</span></label>
-      <input type="text" id="username" class="form-control" formControlName="username" required minlength="5">
-      <span
-        *ngIf="registerForm.get('username').errors != null && registerForm.get('username').touched">
+        <div class="form-group">
+            <label for="username"><span translate>register.username</span></label>
+            <input type="text" id="username" class="form-control" formControlName="username" required minlength="5">
+            <span
+                    *ngIf="registerForm.get('username').errors != null && registerForm.get('username').touched">
       <span class="help-block alert-danger"
             *ngIf="registerForm.get('username').errors['required'] && registerForm.get('username').touched">
         You must provide an username!
@@ -26,45 +26,46 @@
         Username must be at least 5 characters long!
       </span>
         </span>
-    </div>
+        </div>
 
-    <div class="form-group">
-      <label for="email"><span translate>register.email</span></label>
-      <input type="email" id="email" class="form-control" formControlName="email">
-      <span
-        *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched && registerForm.get('email').errors != null">
+        <div class="form-group">
+            <label for="email"><span translate>register.email</span></label>
+            <input type="email" id="email" class="form-control" formControlName="email">
+            <span
+                    *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched && registerForm.get('email').errors != null">
         <span class="help-block alert-danger" *ngIf="registerForm.get('email').errors['required']">You must provide valid email address!</span>
         <span class="help-block alert-danger"
               *ngIf="registerForm.get('email').errors['emailIsTaken'] || !registerForm.get('email').valid">This email is already taken. Please log in!</span>
       </span>
-    </div>
+        </div>
 
-    <div formGroupName="passwords">
-      <div class="form-group">
-        <label for="password"><span translate>register.password</span></label>
-        <input type="password" id="password" class="form-control" formControlName="password">
-        <span class="help-block alert-danger"
-              *ngIf="!registerForm.get('passwords.password').valid && registerForm.get('passwords.password').touched">
+        <div formGroupName="passwords">
+            <div class="form-group">
+                <label for="password"><span translate>register.password</span></label>
+                <input type="password" id="password" class="form-control" formControlName="password">
+                <span class="help-block alert-danger"
+                      *ngIf="!registerForm.get('passwords.password').valid && registerForm.get('passwords.password').touched">
         You must provide password!
       </span>
-      </div>
-      <div class="form-group">
-        <label for="rePassword"><span translate>register.repassword</span></label>
-        <input type="password" id="rePassword" class="form-control" formControlName="rePassword">
-        <span class="help-block alert-danger"
-              *ngIf="!registerForm.get('passwords.rePassword').valid && registerForm.get('passwords.rePassword').touched">
+            </div>
+            <div class="form-group">
+                <label for="rePassword"><span translate>register.repassword</span></label>
+                <input type="password" id="rePassword" class="form-control" formControlName="rePassword">
+                <span class="help-block alert-danger"
+                      *ngIf="!registerForm.get('passwords.rePassword').valid && registerForm.get('passwords.rePassword').touched">
         You must retype your password!
       </span>
-      </div>
-      <div class="alert-danger" *ngIf="(registerForm.get('passwords.rePassword').touched && registerForm.get('passwords.password').touched)
+            </div>
+            <div class="alert-danger" *ngIf="(registerForm.get('passwords.rePassword').touched && registerForm.get('passwords.password').touched)
       && (registerForm.get('passwords.rePassword').value !== registerForm.get('passwords.password').value)">
-        Both passwords fields must be identical!
-      </div>
-    </div>
+                Both passwords fields must be identical!
+            </div>
+        </div>
 
-    <div class="form-group">
-      <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid"><span translate>buttons.register</span></button>
-    </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid"><span translate>buttons.register</span>
+            </button>
+        </div>
 
-  </form>
+    </form>
 </div>

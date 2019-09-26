@@ -18,14 +18,11 @@ export class LoginComponent implements OnInit {
   error = '';
   submitted = false;
   loginForm: FormGroup;
-  private currentUserSubject: BehaviorSubject<User>;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private userService: UserService,
-              private token: TokenStorage,
               private alertService: AlertService) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
   }
 
   get f() {
@@ -48,13 +45,11 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.loading = false;
 
     this.userService.login( this.f['username'].value, this.f['password'].value )
       .subscribe(
         data => {
-          // localStorage.setItem('currentUser', JSON.stringify(data));
-          // this.currentUserSubject.next(data);
           this.router.navigate(['/']);
         },
         error => {
