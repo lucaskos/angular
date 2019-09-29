@@ -86,7 +86,8 @@ export class RegisterComponent implements OnInit {
       form.controls.lastName.value,
       form.controls.email.value,
       form.controls.username.value,
-      form.get('passwords')['controls'].password.value
+      form.get('passwords')['controls'].password.value,
+      null
     );
   }
 }

@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {throwError} from 'rxjs/index';
 import {catchError} from 'rxjs/internal/operators';
 
-const TOKEN_HEADER_KEY = 'Authorization';
+const TOKEN_HEADER_KEY =  'Authorization';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

@@ -109,4 +109,11 @@ export class UserService {
         return this.http.get<boolean>(apiUrl);
     }
 
+    hasRole(role: string): boolean {
+      // const user = localStorage.getItem('currentUser');
+
+
+      return true;
+    }
+
 }
