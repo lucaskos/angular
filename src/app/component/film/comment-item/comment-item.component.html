@@ -1,16 +1,16 @@
 <div>
 
-  <h3>There's comments</h3>
-  <li class="list-group-item" *ngFor="let comment of comments">
-    <div>
-      <a
-        class="list-group-item list-group-item-action"
-        (click)="commentDetails(comment)"
-      >
-        <h5>{{ comment.title }}</h5>
-        <p>{{ comment.text }}</p>
-        <span>{{ comment.userId }}</span>
-      </a>
-    </div>
-  </li>
+    <h3>There's comments</h3>
+    <li class="list-group-item" *ngFor="let comment of comments">
+        <div>
+            <a
+                    class="list-group-item list-group-item-action"
+                    (click)="commentDetails(comment)"
+            >
+                <h5>{{ comment.title }}</h5>
+                <p>{{ comment.text }}</p>
+                <span>{{ comment.userId }}</span>
+            </a>
+        </div>
+    </li>
 </div>

@@ -1,90 +1,91 @@
 <div class="container">
 
-  <form *ngIf="!isLoaded" [formGroup]="filmForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="!isLoaded" [formGroup]="filmForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label for="title" class="center-block" translate>film.title</label>
-      <input id="title" class="form-control" formControlName="title" required>
-      <div
-        *ngIf="this.filmForm.get('title').invalid && (this.filmForm.get('title').dirty || this.filmForm.get('title').touched)"
-        class="alert alert-danger">
+        <div class="form-group">
+            <label for="title" class="center-block" translate>film.title</label>
+            <input id="title" class="form-control" formControlName="title" required>
+            <div
+                    *ngIf="this.filmForm.get('title').invalid && (this.filmForm.get('title').dirty || this.filmForm.get('title').touched)"
+                    class="alert alert-danger">
                     <span *ngIf="this.filmForm.get('title').errors.required">
                         <span translate="film.warning.nameMissing"></span>
                     </span>
-        <span *ngIf="this.filmForm.get('title').errors.minlength" translate>
-          <p>{{ 'film.warning.titleLength' | translate:{'length':titleLength} }}</p>
+                <span *ngIf="this.filmForm.get('title').errors.minlength" translate>
+          <p>{{ 'film.warning.titleLength' | translate:{'length': titleLength} }}</p>
                     </span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="center-block">
-        <span translate>film.year</span>
-        <input class="form-control" formControlName="year">
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label class="center-block">
-        <span translate>film.description</span>
-        <input class="form-control" formControlName="description">
-      </label>
-    </div>
-
-    <div class="form-group">
-      <div *ngIf="film !== undefined">
-        <ul *ngFor="let person of film.peopleList"
-            class="list-group-item-info">
-          <li><strong>{{ person.role }}:</strong> {{ person.firstName }} <strong> {{ person.lastName }}</strong> <span
-            (click)="onRemoveActor(person.id)"
-            class="glyphicon glyphicon-minus"></span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <form [formGroup]="peopleToAdd">
-      <!--<div formGroupName="peopleList">-->
-      <div>
-        <h4><span translate>actors</span></h4>
-        <!--<div class="form-group" *ngFor="let person of this.peopleToAdd.get('people').controls; let i = index">-->
-        <!--<input type="text" class="form-control" [formControlName]="i" (keyup)="onFindPerson()"/>-->
-        <!--</div>-->
-        <input type="text" class="form-control" formControlName="person" #a (keyup)="onFindPerson(a)">
-
-        <div class="form-group" *ngFor="let person of this.found">
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-primary" (click)="onAddPerson(person, roleValue)">{{
-              person.firstName }} {{ person.lastName }}
-              <!--<select [(ngModel)]="roleValue" (ngModelChange)="onChange(person, $event)">-->
-              <!--(ngModelChange)="onchange(person, $event)">-->
-              <!--<select *ngFor="let role of options" [ngValue]="role">{{role}}</select>-->
-              <!--</select>-->
-              <!--<select (onChange)="onSelectRole(role)">-->
-              <!--<option [ngValue]="roleValue" *ngFor="let role of person.role">-->
-              <!--{{role}}-->
-              <!--</option>-->
-              <!--</select>-->
-            </li>
-          </ul>
+            </div>
         </div>
-      </div>
-      <!--</div>-->
-    </form><!-- peopleAdd -->
 
-    <div class="form-row">
-      <button class="btn btn-primary" [disabled]="!filmForm.valid" type="submit">
-        <span translate>buttons.save</span>
-      </button>
-      <button class="btn btn-danger" (click)="resetForm()">
-        <span translate>buttons.reset</span>
-      </button>
-      <button class="btn btn-secondary" (click)="onEditCancel()">
-        <span translate>buttons.cancel</span>
-      </button>
-    </div>
-    <p>Form status: {{filmForm.status | json}}</p>
+        <div class="form-group">
+            <label class="center-block">
+                <span translate>film.year</span>
+                <input class="form-control" formControlName="year">
+            </label>
+        </div>
 
-  </form>
+        <div class="form-group">
+            <label class="center-block">
+                <span translate>film.description</span>
+                <input class="form-control" formControlName="description">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <div *ngIf="film !== undefined">
+                <ul *ngFor="let person of film.peopleList"
+                    class="list-group-item-info">
+                    <li><strong>{{ person.role }}:</strong> {{ person.firstName }}
+                        <strong> {{ person.lastName }}</strong> <span
+                                (click)="onRemoveActor(person.id)"
+                                class="glyphicon glyphicon-minus"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <form [formGroup]="peopleToAdd">
+            <!--<div formGroupName="peopleList">-->
+            <div>
+                <h4><span translate>actors</span></h4>
+                <!--<div class="form-group" *ngFor="let person of this.peopleToAdd.get('people').controls; let i = index">-->
+                <!--<input type="text" class="form-control" [formControlName]="i" (keyup)="onFindPerson()"/>-->
+                <!--</div>-->
+                <input type="text" class="form-control" formControlName="person" #a (keyup)="onFindPerson(a)">
+
+                <div class="form-group" *ngFor="let person of this.found">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-primary" (click)="onAddPerson(person, roleValue)">{{
+                            person.firstName }} {{ person.lastName }}
+                            <!--<select [(ngModel)]="roleValue" (ngModelChange)="onChange(person, $event)">-->
+                            <!--(ngModelChange)="onchange(person, $event)">-->
+                            <!--<select *ngFor="let role of options" [ngValue]="role">{{role}}</select>-->
+                            <!--</select>-->
+                            <!--<select (onChange)="onSelectRole(role)">-->
+                            <!--<option [ngValue]="roleValue" *ngFor="let role of person.role">-->
+                            <!--{{role}}-->
+                            <!--</option>-->
+                            <!--</select>-->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--</div>-->
+        </form><!-- peopleAdd -->
+
+        <div class="form-row">
+            <button class="btn btn-primary" [disabled]="!filmForm.valid" type="submit">
+                <span translate>buttons.save</span>
+            </button>
+            <button class="btn btn-danger" (click)="resetForm()">
+                <span translate>buttons.reset</span>
+            </button>
+            <button class="btn btn-secondary" (click)="onEditCancel()">
+                <span translate>buttons.cancel</span>
+            </button>
+        </div>
+        <p>Form status: {{filmForm.status | json}}</p>
+
+    </form>
 
 </div>

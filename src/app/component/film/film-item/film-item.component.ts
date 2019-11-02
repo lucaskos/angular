@@ -1,43 +1,42 @@
-import { Observable } from 'rxjs/Observable';
-import { Film } from '../../../classes/film';
-import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Film} from '../../../classes/film';
+import {Component, OnInit} from '@angular/core';
 import {FilmService} from '../../../services/film.service';
-import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
+import {Router} from '@angular/router';
+import {UserService} from '../../../services/user.service';
 
 @Component({
-  selector: 'app-film-item',
-  templateUrl: './film-item.component.html',
-  styleUrls: ['./film-item.component.css'],
-  providers: [FilmService]
+    selector: 'app-film-item',
+    templateUrl: './film-item.component.html',
+    styleUrls: ['./film-item.component.css'],
+    providers: [FilmService]
 })
 export class FilmItemComponent implements OnInit {
-  films: Film[];
-  filmDetail: Film;
-  collection: Observable<Film[]>;
+    films: Film[];
+    filmDetail: Film;
+    collection: Observable<Film[]>;
 
-  constructor(private filmService: FilmService,
-              private userService: UserService,
-              private router: Router) {
+    constructor(private filmService: FilmService,
+                private userService: UserService,
+                private router: Router) {
 
-  }
+    }
 
-  ngOnInit() {
-    this.getFilms();
-    this.filmDetail = undefined;
-  }
+    ngOnInit() {
+        this.getFilms();
+        this.filmDetail = undefined;
+    }
 
-  getFilms(): void {
-    this.collection = this.filmService.getAllFilms();
-    this.filmService.getAllFilms()
-      .subscribe(film => this.films = film);
-  }
+    getFilms(): void {
+        this.filmService.getAllFilms()
+            .subscribe(film => this.films = film);
+    }
 
-  addNew(): void {
-    this.router.navigate(['film/new']);
-  }
+    addNew(): void {
+        this.router.navigate(['film/new']);
+    }
 
-  isAuthenticated(): boolean {
-    return this.userService.isAuthenticated();
-  }
+    isAuthenticated(): boolean {
+        return this.userService.isAuthenticated();
+    }
 }
