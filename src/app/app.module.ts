@@ -26,40 +26,43 @@ import {AlertComponent} from "./component/_alert/alert-component";
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    LoginComponent,
-    RegisterComponent,
-    PersonComponent,
-    PersonDetailComponent,
-    TestComponentComponent,
-    AlertComponent
-  ],
-  imports: [
-    // ngx-translate and the loader module
-    BrowserModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FilmsModule
-  ],
-  providers: [FilmService, PersonService, UserService, TokenStorage, CommentService, AlertService, StorageService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        LoginComponent,
+        RegisterComponent,
+        PersonComponent,
+        PersonDetailComponent,
+        TestComponentComponent,
+        AlertComponent
+    ],
+    imports: [
+        // ngx-translate and the loader module
+        BrowserModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FilmsModule
+    ],
+    providers: [FilmService, PersonService, UserService, TokenStorage, CommentService, AlertService, StorageService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        }],
+    exports: [
+        TestComponentComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
