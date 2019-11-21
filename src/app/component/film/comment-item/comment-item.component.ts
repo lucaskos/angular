@@ -43,6 +43,6 @@ export class CommentItemComponent implements OnInit {
 
   commentDetails(comment: Comment) {
     this.storageService.setScope(comment);
-    // this.router.navigate(['/comments/detail/' + comment.id]);
+    this.router.navigate(['/comments/detail/' + comment.id])
   }
 }
