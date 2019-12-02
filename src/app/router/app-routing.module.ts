@@ -6,6 +6,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PersonComponent} from '../component/person/person-component/person.component';
 import {PersonDetailComponent} from '../component/person/person-detail/person-detail.component';
 import {AuthGuard} from '../utils/AuthGuard';
+import {AdminComponent} from "../component/admin/admin.component";
 
 const routes: Routes = [
     {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
@@ -13,7 +14,8 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'person', component: PersonComponent},
-    {path: 'person/:id', component: PersonDetailComponent}
+    {path: 'person/:id', component: PersonDetailComponent},
+    {path: 'admin', component: AdminComponent}
 ];
 
 @NgModule({

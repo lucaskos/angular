@@ -1,61 +1,70 @@
 import {UserService} from './services/user.service';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorage} from './token-storage';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 import {AlertService} from "./services/alert-service";
 import {Role} from "./classes/role";
+import {valueReferenceToExpression} from "@angular/compiler-cli/src/ngtsc/annotations/src/util";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
-  text: string;
-  private isAdmin = this.userService.hasRole(Role.Admin);
+export class AppComponent implements OnInit {
 
-  constructor(private userService: UserService,
-              private tokenStorage: TokenStorage,
-              private translate: TranslateService,
-              private router: Router,
-              private alertService: AlertService) {
-    translate.setDefaultLang('en');
+    title = 'app';
+    text: string;
+    private isAdmin;
 
-  }
+    constructor(private userService: UserService,
+                private tokenStorage: TokenStorage,
+                private translate: TranslateService,
+                private router: Router,
+                private alertService: AlertService) {
+        translate.setDefaultLang('en');
+        userService.getLoggedUser.subscribe(value => {
+            console.log(value);
+            this.ngOnInit();
+        });
+    }
 
-  get authenticated() {
-    return this.userService.isAuthenticated();
-  }
+    ngOnInit(): void {
+        this.isAdmin = this.userService.hasRole(Role.Admin);
+    }
 
-  doLogout() {
-    console.log('logout');
-    this.userService.logout();
-    this.router.navigate(['/login']);
-  }
+    get authenticated() {
+        return this.userService.isAuthenticated();
+    }
 
-  useLanguage(language: string) {
-    this.translate.use(language);
-  }
+    doLogout() {
+        console.log('logout');
+        this.userService.logout();
+        this.router.navigate(['/login']);
+    }
 
-  success(message: string) {
-    this.alertService.success(message);
-  }
+    useLanguage(language: string) {
+        this.translate.use(language);
+    }
 
-  error(message: string) {
-    this.alertService.error(message);
-  }
+    success(message: string) {
+        this.alertService.success(message);
+    }
 
-  info(message: string) {
-    this.alertService.info(message);
-  }
+    error(message: string) {
+        this.alertService.error(message);
+    }
 
-  warn(message: string) {
-    this.alertService.warn(message);
-  }
+    info(message: string) {
+        this.alertService.info(message);
+    }
 
-  clear() {
-    this.alertService.clear();
-  }
+    warn(message: string) {
+        this.alertService.warn(message);
+    }
+
+    clear() {
+        this.alertService.clear();
+    }
 }

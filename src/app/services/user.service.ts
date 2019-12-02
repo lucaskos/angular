@@ -1,5 +1,5 @@
 import {User} from '../user';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {catchError, map} from 'rxjs/operators';
@@ -19,9 +19,11 @@ export class UserService {
     private mainUrl = environment.baseUrl;
     private generateTokenUrl = 'user/signin';
     private tokenName = 'Authorization';
+    @Output() getLoggedUser: EventEmitter<any> = new EventEmitter<any>();
     private user: User;
     private roleToken = 'ROLES';
     private currentUserSubject: BehaviorSubject<User>;
+
 
     constructor(private http: HttpClient,
                 private tokenStorage: TokenStorage,
@@ -31,6 +33,7 @@ export class UserService {
     }
 
     public get currentUserValue(): User {
+        this.user = this.currentUserSubject.value;
         return this.currentUserSubject.value;
     }
 
@@ -39,11 +42,13 @@ export class UserService {
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
+                this.getLoggedUser.emit(this.currentUserSubject.value.roles);
                 return user;
             }));
     }
 
     logout() {
+        this.getLoggedUser.emit(null);
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
