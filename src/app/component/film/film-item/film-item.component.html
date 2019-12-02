@@ -1,24 +1,24 @@
 <div class="film-item">
-  <div class="container">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let film of films">
-        <a
-          class="list-group-item list-group-item-action"
-          [routerLink]="film.filmId"
-        >
-          <span><b>{{film.title}}</b></span>
-          <div class="justify-content-between"><p class="font-weight-bold">{{ film.year }}
-            <p>{{ film.description }}</div>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="container" *ngIf="isAuthenticated()">
-    <button
-      type="button"
-      class="btn btn-sm btn-primary float-left"
-      (click)="addNew()">
-      <span translate>film.addNew</span>
-    </button>
-  </div>
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let film of films">
+                <a
+                        class="list-group-item list-group-item-action"
+                        [routerLink]="film.filmId"
+                >
+                    <span><b>{{film.title}}</b></span>
+                    <div class="justify-content-between"><p class="font-weight-bold">{{ film.year }}
+                        <p>{{ film.description }}</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="container" *ngIf="isAuthenticated()">
+        <button
+                type="button"
+                class="btn btn-sm btn-primary float-left"
+                (click)="addNew()">
+            <span translate>film.addNew</span>
+        </button>
+    </div>
 </div>

@@ -7,6 +7,7 @@ import {TokenStorage} from '../token-storage';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {AlertService} from './alert-service';
+import {Role} from "../classes/role";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -33,14 +34,14 @@ export class UserService {
         return this.currentUserSubject.value;
     }
 
-  login(username, password) {
-    return this.http.post<any>(this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions)
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }));
-  }
+    login(username, password) {
+        return this.http.post<any>(this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions)
+            .pipe(map(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+                return user;
+            }));
+    }
 
     logout() {
         localStorage.removeItem('currentUser');
@@ -55,11 +56,11 @@ export class UserService {
     }
 
     getUserToken(): any {
-        return localStorage.getItem(this.roleToken);
+        return this.currentUserValue.token;
     }
 
-    getUserRoles(): String {
-        return localStorage.getItem(this.roleToken);
+    getUserRoles(): Role[] {
+        return this.currentUserValue.roles;
     }
 
     isAuthenticated(): boolean {
@@ -71,49 +72,43 @@ export class UserService {
         }
     }
 
-    isAdmin(): boolean {
-        let isAdmin = false;
-        const user = this.getUserToken();
-        const roles = this.getUserRoles();
-
-        if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
-            const userRole = user.Role;
-            try {
-                const role = localStorage.getItem(this.roleToken);
-                if (roles.match('ROLE_ADMIN') !== null) {
-                    isAdmin = true;
-                }
-            } catch (error) {
-                isAdmin = false;
+    hasRole(role: Role): boolean {
+        let hasRole = false;
+        if (!this.isAuthenticated()) {
+            return false;
+        }
+        this.currentUserValue.roles.forEach(r => {
+            if (r.match(role)) {
+                hasRole = true;
             }
-        }
+        });
 
-        return isAdmin;
+        return hasRole;
     }
 
-    isPremium(): boolean {
-        const isPremium = false;
-        const user = this.getUserToken();
-        const roles = this.getUserRoles();
-
-        if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
-
-        }
-
-        return isPremium;
-
-    }
+    // isAdmin(): boolean {
+    //     let isAdmin = false;
+    //     const user = this.getUserToken();
+    //     const roles = this.getUserRoles();
+    //
+    //     if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
+    //         const userRole = user.Role;
+    //         try {
+    //             const role = localStorage.getItem(this.roleToken);
+    //             if (roles.match(Role.Admin) !== null) {
+    //                 isAdmin = true;
+    //             }
+    //         } catch (error) {
+    //             isAdmin = false;
+    //         }
+    //     }
+    //
+    //     return isAdmin;
+    // }
 
     isEmailExists(email: string): Observable<boolean> {
         const apiUrl = this.mainUrl + `user/register/checkEmail/` + email;
         return this.http.get<boolean>(apiUrl);
-    }
-
-    hasRole(role: string): boolean {
-      // const user = localStorage.getItem('currentUser');
-
-
-      return true;
     }
 
 }

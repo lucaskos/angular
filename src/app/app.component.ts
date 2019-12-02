@@ -4,6 +4,7 @@ import {TokenStorage} from './token-storage';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 import {AlertService} from "./services/alert-service";
+import {Role} from "./classes/role";
 
 @Component({
   selector: 'app-root',
@@ -13,15 +14,15 @@ import {AlertService} from "./services/alert-service";
 export class AppComponent {
   title = 'app';
   text: string;
-  private isAdmin = false;
+  private isAdmin = this.userService.hasRole(Role.Admin);
 
   constructor(private userService: UserService,
               private tokenStorage: TokenStorage,
               private translate: TranslateService,
               private router: Router,
               private alertService: AlertService) {
-    this.isAdmin = userService.isAdmin();
     translate.setDefaultLang('en');
+
   }
 
   get authenticated() {

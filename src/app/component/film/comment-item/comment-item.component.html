@@ -1,6 +1,7 @@
 <div>
 
-    <h3>There's comments</h3>
+    <h3 *ngIf="isCommentsExist()">There's comments</h3>
+    <h3 *ngIf="!isCommentsExist()">There's no comments</h3>
     <li class="list-group-item" *ngFor="let comment of comments">
         <div>
             <a
