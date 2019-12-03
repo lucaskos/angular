@@ -8,6 +8,8 @@ import {environment} from '../../environments/environment';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {AlertService} from './alert-service';
 import {Role} from "../classes/role";
+import {Film} from "../classes/film";
+import {Roles} from "../classes/roles";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -64,7 +66,7 @@ export class UserService {
         return this.currentUserValue.token;
     }
 
-    getUserRoles(): Role[] {
+    getUserRoles(): Roles[] {
         return this.currentUserValue.roles;
     }
 
@@ -83,7 +85,8 @@ export class UserService {
             return false;
         }
         this.currentUserValue.roles.forEach(r => {
-            if (r.match(role)) {
+            // const roleName = r.roleName.substring(r.roleName.indexOf('_') + 1);
+            if (r === role) {
                 hasRole = true;
             }
         });
@@ -114,6 +117,10 @@ export class UserService {
     isEmailExists(email: string): Observable<boolean> {
         const apiUrl = this.mainUrl + `user/register/checkEmail/` + email;
         return this.http.get<boolean>(apiUrl);
+    }
+
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.mainUrl + `admin/list`);
     }
 
 }
