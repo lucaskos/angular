@@ -10,6 +10,7 @@ import {AlertService} from './alert-service';
 import {Role} from "../classes/role";
 import {Film} from "../classes/film";
 import {Roles} from "../classes/roles";
+import {stringify} from "querystring";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -86,7 +87,7 @@ export class UserService {
         }
         this.currentUserValue.roles.forEach(r => {
             // const roleName = r.roleName.substring(r.roleName.indexOf('_') + 1);
-            if (r === role) {
+            if (stringify(r) === role) {
                 hasRole = true;
             }
         });
