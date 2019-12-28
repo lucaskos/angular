@@ -41,8 +41,8 @@ export class CommentItemComponent implements OnInit {
         console.log(this.comments);
     }
 
-    commentDetails(comment: Comment) {
-        this.storageService.setScope(comment);
-        this.router.navigate(['/comments/detail/' + comment.id]);
+    isCommentsExist(): boolean {
+      return this.comments !== undefined && this.comments.length > 0;
     }
+
 }

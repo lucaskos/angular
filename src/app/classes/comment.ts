@@ -8,6 +8,6 @@ export class Comment {
               public parentCommentId: number,
               public title: string,
               public text: string,
-              public userId: User,
+              public user: User,
               public subComments: Comment[]) {}
 }

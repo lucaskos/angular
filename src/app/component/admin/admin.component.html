@@ -1,0 +1,10 @@
+<div><h2>Admin page</h2>
+    <p>List użytkowników.</p>
+    <div *ngIf="this.users !== undefined && this.users.length > 0">
+        <ul *ngFor="let user of users"
+            class="list-group-item-info">
+            <li>{{user.id}} - {{user.username}} - {{user.roles[0].toString()}}
+            </li>
+        </ul>
+    </div>
+</div>

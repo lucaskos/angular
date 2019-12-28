@@ -4,6 +4,7 @@
     "dashboard": "Main",
     "films": "Films",
     "addFilm": "Add new film",
+    "admin": "Admin",
     "people": "People",
     "login": "Login",
     "logout": "Logout"

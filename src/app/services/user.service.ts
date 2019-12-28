@@ -1,5 +1,5 @@
 import {User} from '../user';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {catchError, map} from 'rxjs/operators';
@@ -7,6 +7,10 @@ import {TokenStorage} from '../token-storage';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {AlertService} from './alert-service';
+import {Role} from "../classes/role";
+import {Film} from "../classes/film";
+import {Roles} from "../classes/roles";
+import {stringify} from "querystring";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,9 +22,11 @@ export class UserService {
     private mainUrl = environment.baseUrl;
     private generateTokenUrl = 'user/signin';
     private tokenName = 'Authorization';
+    @Output() getLoggedUser: EventEmitter<any> = new EventEmitter<any>();
     private user: User;
     private roleToken = 'ROLES';
     private currentUserSubject: BehaviorSubject<User>;
+
 
     constructor(private http: HttpClient,
                 private tokenStorage: TokenStorage,
@@ -30,19 +36,22 @@ export class UserService {
     }
 
     public get currentUserValue(): User {
+        this.user = this.currentUserSubject.value;
         return this.currentUserSubject.value;
     }
 
-  login(username, password) {
-    return this.http.post<any>(this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions)
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }));
-  }
+    login(username, password) {
+        return this.http.post<any>(this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions)
+            .pipe(map(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+                this.getLoggedUser.emit(this.currentUserSubject.value.roles);
+                return user;
+            }));
+    }
 
     logout() {
+        this.getLoggedUser.emit(null);
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
@@ -55,11 +64,11 @@ export class UserService {
     }
 
     getUserToken(): any {
-        return localStorage.getItem(this.roleToken);
+        return this.currentUserValue.token;
     }
 
-    getUserRoles(): String {
-        return localStorage.getItem(this.roleToken);
+    getUserRoles(): Roles[] {
+        return this.currentUserValue.roles;
     }
 
     isAuthenticated(): boolean {
@@ -71,49 +80,48 @@ export class UserService {
         }
     }
 
-    isAdmin(): boolean {
-        let isAdmin = false;
-        const user = this.getUserToken();
-        const roles = this.getUserRoles();
-
-        if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
-            const userRole = user.Role;
-            try {
-                const role = localStorage.getItem(this.roleToken);
-                if (roles.match('ROLE_ADMIN') !== null) {
-                    isAdmin = true;
-                }
-            } catch (error) {
-                isAdmin = false;
+    hasRole(role: Role): boolean {
+        let hasRole = false;
+        if (!this.isAuthenticated()) {
+            return false;
+        }
+        this.currentUserValue.roles.forEach(r => {
+            // const roleName = r.roleName.substring(r.roleName.indexOf('_') + 1);
+            if (stringify(r) === role) {
+                hasRole = true;
             }
-        }
+        });
 
-        return isAdmin;
+        return hasRole;
     }
 
-    isPremium(): boolean {
-        const isPremium = false;
-        const user = this.getUserToken();
-        const roles = this.getUserRoles();
-
-        if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
-
-        }
-
-        return isPremium;
-
-    }
+    // isAdmin(): boolean {
+    //     let isAdmin = false;
+    //     const user = this.getUserToken();
+    //     const roles = this.getUserRoles();
+    //
+    //     if (user !== null && user !== undefined && roles !== null && roles !== undefined) {
+    //         const userRole = user.Role;
+    //         try {
+    //             const role = localStorage.getItem(this.roleToken);
+    //             if (roles.match(Role.Admin) !== null) {
+    //                 isAdmin = true;
+    //             }
+    //         } catch (error) {
+    //             isAdmin = false;
+    //         }
+    //     }
+    //
+    //     return isAdmin;
+    // }
 
     isEmailExists(email: string): Observable<boolean> {
         const apiUrl = this.mainUrl + `user/register/checkEmail/` + email;
         return this.http.get<boolean>(apiUrl);
     }
 
-    hasRole(role: string): boolean {
-      // const user = localStorage.getItem('currentUser');
-
-
-      return true;
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.mainUrl + `admin/list`);
     }
 
 }
