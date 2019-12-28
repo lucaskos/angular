@@ -2,7 +2,7 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 import {CommentService} from '../../../services/comment.service';
 import {Film} from '../../../classes/film';
 import {Comment} from '../../../classes/comment';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {StorageService} from '../../../services/storage.service';
 
 @Component({
@@ -17,6 +17,7 @@ export class CommentItemComponent implements OnInit {
     comments: Comment[];
     @Output()
     comment: Comment;
+    showDetail = false;
 
     constructor(private router: Router,
                 private commentService: CommentService,
@@ -42,7 +43,16 @@ export class CommentItemComponent implements OnInit {
     }
 
     isCommentsExist(): boolean {
-      return this.comments !== undefined && this.comments.length > 0;
+        return this.comments !== undefined && this.comments.length > 0;
+    }
+    commentDetails(comment: Comment) {
+        this.showDetail = !this.showDetail;
+        this.storageService.setScope(comment);
+        this.router.navigate(['/comments/detail/' + comment.id]);
+    }
+
+    getShowDetail(): boolean {
+        return this.showDetail;
     }
 
 }
