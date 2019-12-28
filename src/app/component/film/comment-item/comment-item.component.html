@@ -1,7 +1,11 @@
 <div>
 
-    <h3 *ngIf="isCommentsExist()">There's comments</h3>
-    <h3 *ngIf="!isCommentsExist()">There's no comments</h3>
+    <h3 *ngIf="isCommentsExist()"><span translate="comments.commentsExistsInfo"></span></h3>
+    <h3 *ngIf="!isCommentsExist()"><span translate="comments.commentsNotExistsInfo"></span></h3>
+    <button (click)="addComment()">Dodaj komentarz</button>
+    <div *ngIf="userService.isAuthenticated() && this.showAddComment">
+        <app-comment>This is test</app-comment>
+    </div>
     <li class="list-group-item" *ngFor="let comment of comments">
         <div>
             <a
@@ -9,12 +13,12 @@
             >
                 <span>{{ comment.user.username }}</span>
                 <h5>{{ comment.title }}</h5>
-                <hr />
+                <hr/>
                 <p>{{ comment.text }}</p>
             </a>
-<!--            <div *ngIf="getShowDetail()">-->
-<!--                <app-comment-detail [comment] = this.comment></app-comment-detail>-->
-<!--            </div>-->
+            <!--            <div *ngIf="getShowDetail()">-->
+            <!--                <app-comment-detail [comment] = this.comment></app-comment-detail>-->
+            <!--            </div>-->
         </div>
     </li>
 </div>

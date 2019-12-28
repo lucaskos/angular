@@ -8,9 +8,10 @@ import {FilmRoutingModule} from './film-routing';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommentItemComponent} from './comment-item/comment-item.component';
 import {CommentDetailComponent} from './comment-detail/comment-detail.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
-    declarations: [FilmDetailComponent, FilmItemComponent, FilmDetailComponent, FilmCreateComponent, CommentItemComponent, CommentDetailComponent],
+    declarations: [FilmDetailComponent, FilmItemComponent, FilmDetailComponent, FilmCreateComponent, CommentItemComponent, CommentDetailComponent, CommentComponent],
     imports: [
         ReactiveFormsModule,
         CommonModule,

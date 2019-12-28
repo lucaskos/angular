@@ -21,6 +21,10 @@
       "titleLength": "Tytuł musi mieć co najmniej {{length}} znaków "
     }
   },
+  "comments": {
+    "commentsExistsInfo": "Istnieją komentarze",
+    "commentsNotExistsInfo" : "Możesz dodać komentarz"
+  },
   "buttons": {
     "save": "Zapis",
     "update": "Uaktualnij",

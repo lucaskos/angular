@@ -4,6 +4,7 @@ import {Film} from '../../../classes/film';
 import {Comment} from '../../../classes/comment';
 import {Router} from '@angular/router';
 import {StorageService} from '../../../services/storage.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-comment-item',
@@ -18,10 +19,12 @@ export class CommentItemComponent implements OnInit {
     @Output()
     comment: Comment;
     showDetail = false;
+    showAddComment = false;
 
     constructor(private router: Router,
                 private commentService: CommentService,
-                private storageService: StorageService) {
+                private storageService: StorageService,
+                private userService: UserService) {
     }
 
     ngOnInit() {
@@ -55,4 +58,13 @@ export class CommentItemComponent implements OnInit {
         return this.showDetail;
     }
 
+    addComment() {
+        if (this.showAddComment) {
+            this.showAddComment = false;
+        } else {
+            this.showAddComment = true;
+        }
+
+        return this.showAddComment;
+    }
 }

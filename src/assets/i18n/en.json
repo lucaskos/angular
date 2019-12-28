@@ -21,6 +21,10 @@
       "titleLength": "Minimal title lenght is {{length}} "
     }
   },
+  "comments": {
+    "commentsExistsInfo": "There're comments below",
+    "commentsNotExistsInfo" : "No comments. You can add yours"
+  },
   "buttons": {
     "save": "Save",
     "update": "Update",
