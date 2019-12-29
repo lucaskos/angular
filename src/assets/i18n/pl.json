@@ -23,7 +23,8 @@
   },
   "comments": {
     "commentsExistsInfo": "Istnieją komentarze",
-    "commentsNotExistsInfo" : "Możesz dodać komentarz"
+    "commentsNotExistsInfo" : "Możesz dodać komentarz",
+    "addCommentToObject": "Dodaj komentarz"
   },
   "buttons": {
     "save": "Zapis",

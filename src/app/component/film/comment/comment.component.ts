@@ -1,9 +1,11 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FilmService} from '../../../services/film.service';
 import {PersonService} from '../../../services/person.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Comment} from '../../../classes/comment';
 import {CommentService} from '../../../services/comment.service';
+import {environment} from '../../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-comment',
@@ -18,9 +20,19 @@ export class CommentComponent implements OnInit, OnDestroy {
     objectType: string;
     comment: Comment;
     commentForm: FormGroup;
+
+    @Output() commentAdded = new EventEmitter();
+
     constructor(private filmService: FilmService,
                 private personService: PersonService,
-                private commentService: CommentService) {
+                private commentService: CommentService,
+                private router: Router) {
+
+
+        this.initializeEmptyCommentForm();
+    }
+
+    private initializeEmptyCommentForm() {
         this.commentForm = new FormGroup({
             'title': new FormControl(null,
                 [
@@ -38,7 +50,7 @@ export class CommentComponent implements OnInit, OnDestroy {
         this.initObject();
     }
 
-    initObject() {
+    initObject() {// todo remove this
         if (this.objectType === 'FILM') {
             console.log('FILM');
             this.filmService.getFilm(this.objectToComment).subscribe(value => {
@@ -55,7 +67,9 @@ export class CommentComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        throw new Error('Method not implemented');
+        console.log('ngOnDestroy');
+        this.initializeEmptyCommentForm();
+        this.router.navigate([environment.filmUrl + this.objectToComment]);
     }
 
     onSubmit() {
@@ -65,11 +79,9 @@ export class CommentComponent implements OnInit, OnDestroy {
             this.comment = new Comment(null, this.objectToComment, this.objectType, null, null, title, description, null, null);
             // console.log(title + ' ' + description);
             this.commentService.addComment(this.comment).subscribe(value => {
-                console.log(value);
+                this.commentAdded.emit(true);
                 this.ngOnDestroy();
             });
         }
-        // console.log(this.commentForm);
-
     }
 }

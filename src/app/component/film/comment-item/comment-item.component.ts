@@ -68,4 +68,10 @@ export class CommentItemComponent implements OnInit {
 
         return this.showAddComment;
     }
+
+    getCommentAdded($event) {
+        console.log('HIDE COMMENT EDIT');
+        console.log($event);
+        this.showAddComment = !this.showAddComment;
+    }
 }

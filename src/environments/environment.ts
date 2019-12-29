@@ -5,6 +5,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8083/'
+  baseUrl: 'http://localhost:8083/',
+  filmUrl: 'films/',
+  personUrl: 'person/'
   // baseUrl: 'http://192.168.99.100:5000/'
 };
