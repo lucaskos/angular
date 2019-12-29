@@ -34,4 +34,11 @@ export class CommentService {
 
         return this.httpClient.post<Comment[]>(this.mainUrl + this.commentsGet, object, httpOptions);
     }
+
+    getComment(commentId: Number): Observable<Comment> {
+        console.log(commentId);
+
+        return this.httpClient.get<Comment>(this.mainUrl + this.commentGet + commentId, httpOptions);
+    }
+
 }

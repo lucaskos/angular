@@ -80,6 +80,7 @@ export class CommentComponent implements OnInit, OnDestroy {
             // console.log(title + ' ' + description);
             this.commentService.addComment(this.comment).subscribe(value => {
                 this.commentAdded.emit(true);
+                this.commentService.setNewCommentAdded(true);
                 this.ngOnDestroy();
             });
         }
