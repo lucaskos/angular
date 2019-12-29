@@ -48,6 +48,7 @@ export class CommentItemComponent implements OnInit {
     isCommentsExist(): boolean {
         return this.comments !== undefined && this.comments.length > 0;
     }
+
     commentDetails(comment: Comment) {
         this.showDetail = !this.showDetail;
         this.storageService.setScope(comment);

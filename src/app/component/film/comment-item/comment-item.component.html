@@ -4,17 +4,17 @@
     <h3 *ngIf="!isCommentsExist()"><span translate="comments.commentsNotExistsInfo"></span></h3>
     <button (click)="addComment()">Dodaj komentarz</button>
     <div *ngIf="userService.isAuthenticated() && this.showAddComment">
-        <app-comment [objectToComment] = this.film.filmId [objectType]="'FILM'">This is test</app-comment>
+        <app-comment [objectToComment]=this.film.filmId [objectType]="'FILM'">This is test</app-comment>
     </div>
     <li class="list-group-item" *ngFor="let comment of comments">
         <div>
             <a
                     class="list-group-item list-group-item-action"
             >
-                <span>{{ comment.user.username }}</span>
-                <h5>{{ comment.title }}</h5>
+                <span *ngIf="comment.user != null">User: <b>{{ comment.user.username }}</b></span>
+                <h5>Title: <i><b>{{ comment.title }}</b></i></h5>
                 <hr/>
-                <p>{{ comment.text }}</p>
+                <p>Descr: {{ comment.text }}</p>
             </a>
             <!--            <div *ngIf="getShowDetail()">-->
             <!--                <app-comment-detail [comment] = this.comment></app-comment-detail>-->
