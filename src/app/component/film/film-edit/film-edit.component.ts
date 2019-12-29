@@ -48,6 +48,7 @@ export class FilmCreateComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.film) {
+            console.log('Film editing...');
             this.filmForm = new FormGroup({
                 'title': new FormControl(this.film.title, [
                     Validators.required,
@@ -57,6 +58,8 @@ export class FilmCreateComponent implements OnInit {
                 'description': new FormControl(this.film.description),
                 'peopleList': new FormArray(this.getPeopleControlls(this.film.peopleList))
             });
+        } else {
+            console.log('New film inserting....');
         }
     }
 
@@ -176,9 +179,5 @@ export class FilmCreateComponent implements OnInit {
     onchange(person: Person, $event) {
         person.role = $event.toString();
         console.log(person);
-    }
-
-    isAuthenticated(): boolean {
-        return this.userService.isAuthenticated();
     }
 }

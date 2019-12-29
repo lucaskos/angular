@@ -74,9 +74,4 @@ export class FilmDetailComponent implements OnInit {
         console.log(evt);
 
     }
-
-    isAuthenticated(): boolean {
-        return this.userService.isAuthenticated();
-    }
-
 }

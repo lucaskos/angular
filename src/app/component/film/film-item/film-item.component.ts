@@ -35,8 +35,4 @@ export class FilmItemComponent implements OnInit {
     addNew(): void {
         this.router.navigate(['film/new']);
     }
-
-    isAuthenticated(): boolean {
-        return this.userService.isAuthenticated();
-    }
 }
