@@ -2,8 +2,10 @@
 
     <h3 *ngIf="isCommentsExist()"><span translate="comments.commentsExistsInfo"></span></h3>
     <h3 *ngIf="!isCommentsExist()"><span translate="comments.commentsNotExistsInfo"></span></h3>
-    <button (click)="addComment()">Dodaj komentarz</button>
-    <div *ngIf="userService.isAuthenticated() && this.showAddComment">
+    <div *ngIf="userService.isAuthenticated()">
+        <button (click)="addComment()">Dodaj komentarz</button>
+    </div>
+    <div *ngIf="this.showAddComment">
         <app-comment [objectToComment]=this.film.filmId [objectType]="'FILM'">This is test</app-comment>
     </div>
     <li class="list-group-item" *ngFor="let comment of comments">

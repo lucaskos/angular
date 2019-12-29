@@ -2,3 +2,10 @@ div.comment-edit {
     padding-left: 40px;
     border: 1px solid black;
 }
+.comment-edit form {
+    margin: 10px;
+}
+textarea.description {
+    resize: vertical;
+    max-height: 200px;
+}

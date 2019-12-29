@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FilmService} from '../../../services/film.service';
 import {PersonService} from '../../../services/person.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -10,15 +10,14 @@ import {CommentService} from '../../../services/comment.service';
     templateUrl: './comment.component.html',
     styleUrls: ['./comment.component.css']
 })
-export class CommentComponent implements OnInit {
-
+export class CommentComponent implements OnInit, OnDestroy {
     @Input()
     objectToComment: number;
+
     @Input()
     objectType: string;
     comment: Comment;
     commentForm: FormGroup;
-
     constructor(private filmService: FilmService,
                 private personService: PersonService,
                 private commentService: CommentService) {
@@ -55,6 +54,10 @@ export class CommentComponent implements OnInit {
         }
     }
 
+    ngOnDestroy(): void {
+        throw new Error('Method not implemented');
+    }
+
     onSubmit() {
         if (this.commentForm.valid) {
             const title = this.commentForm.get('title').value;
@@ -63,6 +66,7 @@ export class CommentComponent implements OnInit {
             // console.log(title + ' ' + description);
             this.commentService.addComment(this.comment).subscribe(value => {
                 console.log(value);
+                this.ngOnDestroy();
             });
         }
         // console.log(this.commentForm);
