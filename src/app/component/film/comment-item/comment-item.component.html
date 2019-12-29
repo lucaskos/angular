@@ -2,14 +2,14 @@
     <h3 *ngIf="isCommentsExist()"><span translate="comments.commentsExistsInfo"></span></h3>
     <h3 *ngIf="!isCommentsExist()"><span translate="comments.commentsNotExistsInfo"></span></h3>
     <div class="comment-buttons" *ngIf="userService.isAuthenticated()">
-        <button class="btn btn-success" (click)="addComment()">
-            <span *ngIf="!this.showAddComment" translate>comments.addCommentToObject</span>
-            <span *ngIf="this.showAddComment" translate>buttons.cancel</span>
+        <button class="btn btn-success" (click)="showCommentAdditionControls()">
+            <span *ngIf="!this.showAddCommentsControls" translate>comments.addCommentToObject</span>
+            <span *ngIf="this.showAddCommentsControls" translate>buttons.cancel</span>
         </button>
         <span></span>
     </div>
-    <div *ngIf="this.showAddComment">
-        <app-comment (commentAdded)="getCommentAdded($event)" [objectToComment]=this.film.filmId [objectType]="'FILM'">
+    <div *ngIf="this.showAddCommentsControls">
+        <app-comment [objectToComment]=this.film.filmId [objectType]="'FILM'">
             This is test
         </app-comment>
     </div>

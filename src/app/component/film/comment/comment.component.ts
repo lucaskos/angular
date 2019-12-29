@@ -15,13 +15,10 @@ import {Router} from '@angular/router';
 export class CommentComponent implements OnInit, OnDestroy {
     @Input()
     objectToComment: number;
-
     @Input()
     objectType: string;
     comment: Comment;
     commentForm: FormGroup;
-
-    @Output() commentAdded = new EventEmitter();
 
     constructor(private filmService: FilmService,
                 private personService: PersonService,
@@ -77,9 +74,7 @@ export class CommentComponent implements OnInit, OnDestroy {
             const title = this.commentForm.get('title').value;
             const description = this.commentForm.get('description').value;
             this.comment = new Comment(null, this.objectToComment, this.objectType, null, null, title, description, null, null);
-            // console.log(title + ' ' + description);
             this.commentService.addComment(this.comment).subscribe(value => {
-                this.commentAdded.emit(true);
                 this.commentService.setNewCommentAdded(true);
                 this.ngOnDestroy();
             });

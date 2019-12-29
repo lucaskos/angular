@@ -18,7 +18,8 @@ export class CommentItemComponent implements OnInit {
     comments: Comment[];
     @Output()
     comment: Comment;
-    showAddComment = false;
+    showAddCommentsControls = false;
+    isCommentAdded = false;
 
     constructor(private router: Router,
                 private commentService: CommentService,
@@ -34,10 +35,20 @@ export class CommentItemComponent implements OnInit {
             comment.entityType = 'FILM';
             comment.entityId = this.film.filmId;
         }
+
+        this.getAllItemComments(comment);
+
+        this.commentService.change.subscribe(isCommentAdded => {
+            this.isCommentAdded = isCommentAdded;
+            this.showAddCommentsControls = !this.showAddCommentsControls;
+            this.getAllItemComments(comment);
+        });
+    }
+
+    private getAllItemComments(comment) {
         this.commentService.getAllObjectComments(comment).subscribe(
             (result) => {
                 this.comments = result;
-                console.log(result);
             }
         );
     }
@@ -46,20 +57,8 @@ export class CommentItemComponent implements OnInit {
         return this.comments !== undefined && this.comments.length > 0;
     }
 
-    addComment() {
-        if (this.showAddComment) {
-            this.showAddComment = false;
-        } else {
-            this.showAddComment = true;
-        }
-
-        return this.showAddComment;
-    }
-
-    getCommentAdded($event) {
-        this.showAddComment = !this.showAddComment;
-        if ($event === true) {
-            this.ngOnInit();
-        }
+    showCommentAdditionControls() {
+        this.showAddCommentsControls = !this.showAddCommentsControls;
+        return this.showAddCommentsControls;
     }
 }

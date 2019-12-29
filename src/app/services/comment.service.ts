@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Comment} from '../classes/comment';
@@ -16,7 +16,8 @@ export class CommentService {
     private commentGet = '/detail/';
     private commentsGet = '/list';
 
-    private commentAdded: boolean;
+    private commentAdded = false;
+    @Output() change: EventEmitter<boolean> = new EventEmitter();
 
     constructor(private httpClient: HttpClient) {
     }
@@ -41,4 +42,8 @@ export class CommentService {
         return this.httpClient.get<Comment>(this.mainUrl + this.commentGet + commentId, httpOptions);
     }
 
+    setNewCommentAdded(isCommentAdded: boolean) {
+        this.commentAdded = !this.commentAdded;
+        this.change.emit(this.commentAdded);
+    }
 }
