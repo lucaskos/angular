@@ -18,7 +18,6 @@ export class CommentItemComponent implements OnInit {
     comments: Comment[];
     @Output()
     comment: Comment;
-    showDetail = false;
     showAddComment = false;
 
     constructor(private router: Router,
@@ -41,22 +40,10 @@ export class CommentItemComponent implements OnInit {
                 console.log(result);
             }
         );
-
-        console.log(this.comments);
     }
 
     isCommentsExist(): boolean {
         return this.comments !== undefined && this.comments.length > 0;
-    }
-
-    commentDetails(comment: Comment) {
-        this.showDetail = !this.showDetail;
-        this.storageService.setScope(comment);
-        this.router.navigate(['/comments/detail/' + comment.id]);
-    }
-
-    getShowDetail(): boolean {
-        return this.showDetail;
     }
 
     addComment() {
@@ -70,8 +57,9 @@ export class CommentItemComponent implements OnInit {
     }
 
     getCommentAdded($event) {
-        console.log('HIDE COMMENT EDIT');
-        console.log($event);
         this.showAddComment = !this.showAddComment;
+        if ($event === true) {
+            this.ngOnInit();
+        }
     }
 }

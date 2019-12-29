@@ -17,8 +17,6 @@ export class FilmDetailComponent implements OnInit {
     @Output() film: Film;
     toggleEdit = false;
     id: number;
-    toggleCommentReply = false;
-    commentId: number;
 
     constructor(private filmService: FilmService,
                 private userService: UserService,
@@ -49,29 +47,11 @@ export class FilmDetailComponent implements OnInit {
     }
 
     loadFilmToEdit(): void {
-        if (this.toggleEdit) {
-            this.toggleEdit = false;
-        } else {
-            this.toggleEdit = true;
-        }
-    }
-
-    addComentReply(id: number): void {
-        this.commentId = id;
-        if (this.toggleCommentReply) {
-            this.toggleCommentReply = false;
-        } else {
-            this.toggleCommentReply = true;
-        }
+        this.toggleEdit = !this.toggleEdit;
     }
 
     getSavedNotification(evt) {
-        console.log(evt);
         this.toggleEdit = !evt;
     }
 
-    showCommentBox(evt) {
-        console.log(evt);
-
-    }
 }

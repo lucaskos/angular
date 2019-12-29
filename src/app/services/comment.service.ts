@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Comment} from '../classes/comment';
 import {Observable} from 'rxjs/Observable';
+import {observable} from 'rxjs';
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,6 +15,8 @@ export class CommentService {
     private commentPost = '/add';
     private commentGet = '/detail/';
     private commentsGet = '/list';
+
+    private commentAdded: boolean;
 
     constructor(private httpClient: HttpClient) {
     }
@@ -36,6 +39,22 @@ export class CommentService {
         console.log(commentId);
 
         return this.httpClient.get<Comment>(this.mainUrl + this.commentGet + commentId, httpOptions);
+    }
+
+    isNewCommentCreated(): Observable<boolean> {
+        const commentAddedObservable = new Observable<boolean>(observer => {
+            setTimeout(() => {
+                observer.next(this.commentAdded);
+            }, 1000);
+        });
+
+        this.commentAdded = false;
+        return commentAddedObservable;
+    }
+
+    setNewCommentAdded(commentAdded: boolean) {
+        this.commentAdded = commentAdded;
+
     }
 
 }
