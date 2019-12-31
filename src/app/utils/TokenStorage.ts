@@ -20,6 +20,7 @@ export class TokenStorage {
     }
 
     public getToken(): string {
+        let item = localStorage.getItem('currentUser');
         return sessionStorage.getItem(TOKEN_KEY);
     }
 }

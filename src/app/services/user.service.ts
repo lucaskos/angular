@@ -7,10 +7,11 @@ import {TokenStorage} from '../token-storage';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {AlertService} from './alert-service';
-import {Role} from "../classes/role";
-import {Film} from "../classes/film";
-import {Roles} from "../classes/roles";
-import {stringify} from "querystring";
+import {Role} from '../classes/role';
+import {Film} from '../classes/film';
+import {Roles} from '../classes/roles';
+import {stringify} from 'querystring';
+import {Token} from '../../../Token';
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -43,7 +44,16 @@ export class UserService {
     login(username, password) {
         return this.http.post<any>(this.mainUrl + this.generateTokenUrl, {username, password}, httpOptions)
             .pipe(map(user => {
-                localStorage.setItem('currentUser', JSON.stringify(user));
+
+                for (const key in user) {
+                    console.log(key);
+                    if (key === 'token') {
+                        console.log(user[key]);
+                        localStorage.setItem('currentUser', JSON.stringify(user[key].replace('\"','')));
+                    }
+                }
+
+                // localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 this.getLoggedUser.emit(this.currentUserSubject.value.roles);
                 return user;
