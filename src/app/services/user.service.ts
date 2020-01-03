@@ -49,6 +49,7 @@ export class UserService {
                     console.log(key);
                     if (key === 'token') {
                         console.log(user[key]);
+                        // fixme change to cookie
                         localStorage.setItem('currentUser', JSON.stringify(user[key].replace('\"','')));
                     }
                 }
