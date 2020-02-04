@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/internal/operators';
 import {BehaviorSubject, empty} from 'rxjs';
 import {User} from '../../../user';
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-login',
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                     this.loading = true;
-                    this.alertService.error(error);
+                    this.alertService.error(error.error.message);
                     return empty();
                 });
     }

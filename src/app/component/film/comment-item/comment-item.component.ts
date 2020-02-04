@@ -36,21 +36,7 @@ export class CommentItemComponent implements OnInit {
             comment.entityId = this.film.filmId;
         }
 
-        this.getAllItemComments(comment);
-
-        this.commentService.change.subscribe(isCommentAdded => {
-            this.isCommentAdded = isCommentAdded;
-            this.showAddCommentsControls = !this.showAddCommentsControls;
-            this.getAllItemComments(comment);
-        });
-    }
-
-    private getAllItemComments(comment) {
-        this.commentService.getAllObjectComments(comment).subscribe(
-            (result) => {
-                this.comments = result;
-            }
-        );
+        this.comments = this.film.filmCommentsList;
     }
 
     isCommentsExist(): boolean {

@@ -33,7 +33,7 @@ export class CommentService {
     getAllObjectComments(object: Object): Observable<Comment[]> {
         console.log(object);
 
-        return this.httpClient.post<Comment[]>(this.mainUrl + this.commentsGet, object, httpOptions);
+        return this.httpClient.get<Comment[]>(this.mainUrl + this.commentsGet, object);
     }
 
     getComment(commentId: Number): Observable<Comment> {
